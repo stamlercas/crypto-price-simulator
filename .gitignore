@@ -1,3 +1,5 @@
+babel_cache/
+
 # Logs
 logs
 *.log
