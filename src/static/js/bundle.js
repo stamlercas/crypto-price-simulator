@@ -75359,7 +75359,7 @@ var Simulations = function (_React$Component) {
                   'Mean'
                 ),
                 _react2.default.createElement('br', null),
-                this.state.simulationAnalysis.mean
+                this.state.simulationAnalysis.mean.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
@@ -75370,7 +75370,7 @@ var Simulations = function (_React$Component) {
                   'Median'
                 ),
                 _react2.default.createElement('br', null),
-                this.state.simulationAnalysis.median
+                this.state.simulationAnalysis.median.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
@@ -75381,7 +75381,7 @@ var Simulations = function (_React$Component) {
                   'Standard Deviation'
                 ),
                 _react2.default.createElement('br', null),
-                this.state.simulationAnalysis.stdev
+                this.state.simulationAnalysis.stdev.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
@@ -75392,7 +75392,7 @@ var Simulations = function (_React$Component) {
                   'Min'
                 ),
                 _react2.default.createElement('br', null),
-                this.state.simulationAnalysis.min
+                this.state.simulationAnalysis.min.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
@@ -75403,7 +75403,7 @@ var Simulations = function (_React$Component) {
                   'Max'
                 ),
                 _react2.default.createElement('br', null),
-                this.state.simulationAnalysis.max
+                this.state.simulationAnalysis.max.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
@@ -75414,7 +75414,7 @@ var Simulations = function (_React$Component) {
                   'Range'
                 ),
                 _react2.default.createElement('br', null),
-                this.state.simulationAnalysis.range
+                this.state.simulationAnalysis.range.toFixed(5)
               )
             ),
             _react2.default.createElement(
@@ -75427,88 +75427,52 @@ var Simulations = function (_React$Component) {
               { className: 'row' },
               _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4 text-center alert-danger' },
+                { className: 'offset-sm-2 col-sm-1 text-center alert-danger' },
                 '3sd',
                 _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  this.state.simulationAnalysis.percentiles.sd3.low.toFixed(5)
-                )
+                this.state.simulationAnalysis.percentiles.sd3.low.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4 text-center alert-warning' },
+                { className: 'col-sm-1 text-center alert-warning' },
                 '2sd',
                 _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  this.state.simulationAnalysis.percentiles.sd2.low.toFixed(5)
-                )
+                this.state.simulationAnalysis.percentiles.sd2.low.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4 text-center alert-success' },
+                { className: 'col-sm-1 text-center alert-success' },
                 '1sd',
                 _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  this.state.simulationAnalysis.percentiles.sd1.low.toFixed(5)
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'row' },
+                this.state.simulationAnalysis.percentiles.sd1.low.toFixed(5)
+              ),
               _react2.default.createElement(
                 'div',
-                { className: 'offset-md-3 col-sm-6 text-center alert' },
+                { className: 'col-sm-2 text-center alert' },
                 'Current',
                 _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  this.state.simulationAnalysis.percentiles.cur
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'row' },
+                this.state.simulationAnalysis.percentiles.cur.toFixed(5)
+              ),
               _react2.default.createElement(
                 'div',
-                { className: ' col-sm-4 text-center alert-success' },
+                { className: ' col-sm-1 text-center alert-success' },
                 '1sd',
                 _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  this.state.simulationAnalysis.percentiles.sd1.high
-                )
+                this.state.simulationAnalysis.percentiles.sd1.high.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4 text-center alert-warning' },
+                { className: 'col-sm-1 text-center alert-warning' },
                 '2sd',
                 _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  this.state.simulationAnalysis.percentiles.sd2.high
-                )
+                this.state.simulationAnalysis.percentiles.sd2.high.toFixed(5)
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4 text-center alert-danger' },
+                { className: 'col-sm-1 text-center alert-danger' },
                 '3sd',
                 _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  this.state.simulationAnalysis.percentiles.sd3.high
-                )
+                this.state.simulationAnalysis.percentiles.sd3.high.toFixed(5)
               )
             )
           )
