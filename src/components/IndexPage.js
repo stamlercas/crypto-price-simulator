@@ -19,7 +19,8 @@ export default class IndexPage extends React.Component {
 				annualDrift: Number,
 				meanDrift: Number
 			},
-			timestamp: Number
+			timestamp: Number,
+			interval: "1d"
 		};
 		this.ccxt = require('ccxt');
 

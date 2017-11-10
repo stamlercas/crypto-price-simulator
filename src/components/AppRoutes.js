@@ -6,7 +6,7 @@ export default class AppRoutes extends React.Component {
   render() {
     return (
 	      	<BrowserRouter>
-	      		<div>
+	      		<div className="container-fluid">
 		      		<header>
 			          <Link to="/">
 			            <img className="logo" src="/img/logo-judo-heroes.png"/>
@@ -15,7 +15,7 @@ export default class AppRoutes extends React.Component {
 		      		{routes}
 		      		<footer>
 			          <p>
-			            This is a demo app to showcase universal rendering and routing with <strong>React</strong> and <strong>Express</strong>.
+			            This is a risk analysis application that uses geometric Brownian motion to forecast future cryptocurrency prices.
 			          </p>
 		        	</footer>
 	        	</div>

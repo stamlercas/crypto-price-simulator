@@ -1,12 +1,12 @@
 import React from 'react';
 import {Bar, Line} from 'react-chartjs-2';
+import Simulation from './Simulation';
+import Simulations from './Simulations';
 
 export default class Analysis extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      historicalData: [],
-      futureData: [],           // simulation over one year documenting the closing price of every day
       summaryStatistics: {
         close: Number,
         dailyVolatility: Number,
@@ -62,7 +62,7 @@ export default class Analysis extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.historicalData.length > 0 && this.props.timestamp !== nextProps.timestamp) {
       this.calculateSummaryStatistics();
-      this.calculateFutureData();
+      //this.calculateFutureData();
       this.simulate(this.state.numberOfSimulations);
     }
   }
@@ -114,7 +114,7 @@ export default class Analysis extends React.Component {
           {
             label: 'Normal Distribution',
             type:'line',
-            data: [],
+            data: normalDistributions,
             fill: false,
             borderColor: '#EC932F',
             backgroundColor: '#EC932F',
@@ -131,7 +131,7 @@ export default class Analysis extends React.Component {
           {
             type: 'bar',
             label: 'Histogram',
-            data: [],
+            data: this.state.histogram,
             fill: false,
             backgroundColor: '#71B37C',
             borderColor: '#71B37C',
@@ -156,8 +156,8 @@ export default class Analysis extends React.Component {
       }
     };
     data.futureData.datasets[0].data = this.state.futureData;
-    data.simulationsGraphData.datasets[0].data = normalDistributions;
-    data.simulationsGraphData.datasets[1].data = this.state.histogram;
+    //data.simulationsGraphData.datasets[0].data = normalDistributions;
+    //data.simulationsGraphData.datasets[1].data = this.state.histogram;
     return data;
   }
 
@@ -171,6 +171,7 @@ export default class Analysis extends React.Component {
     const volume = 5;
 
     var historicalData = JSON.parse(JSON.stringify(this.props.historicalData));
+    console.log(historicalData);
 
     historicalData.forEach(function(candle) {
       // first push onto the array the returns, (close divided by open)
@@ -438,61 +439,18 @@ export default class Analysis extends React.Component {
         ]
       }
     };
+    console.log(this.props.historicalData);
     return (
       <div>
         <div className="row">
-          <div className="col-md-8 offset-md-2">
-            <Line data={data.futureData} />
+          <div className="col-md-4 offset-md-1">
+            <h3>One Year Simulation</h3>
+          </div>
+          <div className="col-md-6">
+            <Simulation historicalData={this.props.historicalData} summaryStatistics={this.state.summaryStatistics}/>
           </div>
         </div>
-        <br />
-        <h3>{this.state.numberOfSimulations} Simulations</h3>
-        <div className="row">
-          <div className="col-md-8 offset-md-2">
-            <Bar data={data.simulationsGraphData} options={options}/>
-          </div>
-        </div>
-        <div className="row">
-            <div className="col-sm-4 text-center alert-danger">
-              3sd
-              <br />
-              <strong>{this.state.simulationAnalysis.percentiles.sd3.low}</strong>
-            </div>
-            <div className="col-sm-4 text-center alert-warning">
-                2sd
-                <br />
-                <strong>{this.state.simulationAnalysis.percentiles.sd2.low}</strong>
-            </div>
-            <div className="col-sm-4 text-center alert-success">
-                1sd
-                <br />
-                <strong>{this.state.simulationAnalysis.percentiles.sd1.low}</strong>
-            </div>
-          </div>
-          <div className="row">
-            <div className="offset-md-3 col-sm-6 text-center alert">
-                Current
-                <br />
-                <strong>{this.state.simulationAnalysis.percentiles.cur}</strong>
-            </div>
-          </div>
-          <div className="row">
-            <div className=" col-sm-4 text-center alert-success">
-                1sd
-                <br />
-                <strong>{this.state.simulationAnalysis.percentiles.sd1.high}</strong>
-            </div>
-            <div className="col-sm-4 text-center alert-warning">
-                2sd
-                <br />
-                <strong>{this.state.simulationAnalysis.percentiles.sd2.high}</strong>
-            </div>
-            <div className="col-sm-4 text-center alert-danger">
-                3sd
-                <br />
-                <strong>{this.state.simulationAnalysis.percentiles.sd3.high}</strong>
-            </div>
-          </div>
+        <Simulations historicalData={this.props.historicalData} summaryStatistics={this.state.summaryStatistics} />
       </div>
     );
   }
