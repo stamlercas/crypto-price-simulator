@@ -186,14 +186,6 @@ export default class Simulations extends React.Component {
             gridLines: {
               display: false
             }
-          },
-          {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            gridLines: {
-              display: false
-            }
           }
         ]
       }
@@ -216,35 +208,30 @@ export default class Simulations extends React.Component {
             <div className="row text-center">
               <div className="col-md-2">
                 <h4>Mean</h4>
-                <br />
                 {this.state.simulationAnalysis.mean.toFixed(5)}
               </div>
               <div className="col-md-2">
                 <h4>Median</h4>
-                <br />
                 {this.state.simulationAnalysis.median.toFixed(5)}
               </div>
               <div className="col-md-2">
                 <h4>Standard Deviation</h4>
-                <br />
                 {this.state.simulationAnalysis.stdev.toFixed(5)}
               </div>
               <div className="col-md-2">
                 <h4>Min</h4>
-                <br />
                 {this.state.simulationAnalysis.min.toFixed(5)}
               </div>
               <div className="col-md-2">
                 <h4>Max</h4>
-                <br />
                 {this.state.simulationAnalysis.max.toFixed(5)}
               </div>
               <div className="col-md-2">
                 <h4>Range</h4>
-                <br />
                 {this.state.simulationAnalysis.range.toFixed(5)}
               </div>
             </div>
+            <br />
             <h3>Analysis</h3>
             <div className="row">
               <div className="col-md-5">

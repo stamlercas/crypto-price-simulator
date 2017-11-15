@@ -58269,8 +58269,8 @@ var Layout = exports.Layout = function Layout(props) {
         'nav',
         { className: 'navbar navbar-expand-lg navbar-light bg-light' },
         _react2.default.createElement(
-          'a',
-          { className: 'navbar-brand', href: '#' },
+          _reactRouterDom.Link,
+          { className: 'navbar-brand', to: '/' },
           'CryptoCurrency Simulator'
         ),
         _react2.default.createElement(
@@ -58308,7 +58308,7 @@ var Layout = exports.Layout = function Layout(props) {
     ),
     _react2.default.createElement(
       'div',
-      { className: 'container-fluid' },
+      { className: 'app-container container-fluid' },
       props.children
     ),
     _react2.default.createElement(
@@ -74964,12 +74964,17 @@ var Simulation = function (_React$Component) {
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
-          pointBackgroundColor: '#fff',
           pointBorderWidth: 1,
           pointHoverRadius: 5,
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
+          borderColor: '#00A7E1',
+          backgroundColor: '#00A7E1',
+          pointBorderColor: '#00A7E1',
+          pointBackgroundColor: '#00A7E1',
+          pointHoverBackgroundColor: '#00A7E1',
+          pointHoverBorderColor: '#00A7E1',
           data: []
         }]
       };
@@ -75208,13 +75213,6 @@ var Simulations = function (_React$Component) {
             gridLines: {
               display: false
             }
-          }, {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            gridLines: {
-              display: false
-            }
           }]
         }
       };
@@ -75261,7 +75259,6 @@ var Simulations = function (_React$Component) {
                   null,
                   'Mean'
                 ),
-                _react2.default.createElement('br', null),
                 this.state.simulationAnalysis.mean.toFixed(5)
               ),
               _react2.default.createElement(
@@ -75272,7 +75269,6 @@ var Simulations = function (_React$Component) {
                   null,
                   'Median'
                 ),
-                _react2.default.createElement('br', null),
                 this.state.simulationAnalysis.median.toFixed(5)
               ),
               _react2.default.createElement(
@@ -75283,7 +75279,6 @@ var Simulations = function (_React$Component) {
                   null,
                   'Standard Deviation'
                 ),
-                _react2.default.createElement('br', null),
                 this.state.simulationAnalysis.stdev.toFixed(5)
               ),
               _react2.default.createElement(
@@ -75294,7 +75289,6 @@ var Simulations = function (_React$Component) {
                   null,
                   'Min'
                 ),
-                _react2.default.createElement('br', null),
                 this.state.simulationAnalysis.min.toFixed(5)
               ),
               _react2.default.createElement(
@@ -75305,7 +75299,6 @@ var Simulations = function (_React$Component) {
                   null,
                   'Max'
                 ),
-                _react2.default.createElement('br', null),
                 this.state.simulationAnalysis.max.toFixed(5)
               ),
               _react2.default.createElement(
@@ -75316,10 +75309,10 @@ var Simulations = function (_React$Component) {
                   null,
                   'Range'
                 ),
-                _react2.default.createElement('br', null),
                 this.state.simulationAnalysis.range.toFixed(5)
               )
             ),
+            _react2.default.createElement('br', null),
             _react2.default.createElement(
               'h3',
               null,
@@ -97495,23 +97488,134 @@ var NotFoundPage = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'container' },
         _react2.default.createElement(
           'div',
-          { className: 'container' },
+          null,
           _react2.default.createElement(
             'h1',
             null,
-            'How Does It Work?'
+            'Running simulations can prepare us for the worst.'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            'The process for running this simulation is:',
+            _react2.default.createElement(
+              'ul',
+              null,
+              _react2.default.createElement(
+                'li',
+                null,
+                'Specify a model (for here, we will use geometric Brownian motion)'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Get historical daily bitcoin prices'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Calculate daily returns'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Name the daily return range'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Summary statistics'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Simulate a year'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Simulate a year many times'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Multi-year summary statistics'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Quick analysis of results'
+              )
+            )
           )
         ),
         _react2.default.createElement(
-          'p',
+          'div',
           null,
           _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/' },
-            'Go back to the main page'
+            'h3',
+            null,
+            'What is geometric brownian motion?'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'The geometric Brownian motion (GBM) is a ',
+            _react2.default.createElement(
+              'strong',
+              null,
+              'statistical method that is used heavily in the forecasting of stock prices.'
+            ),
+            ' The reason the process is so attractive for this is because of the following:'
+          ),
+          _react2.default.createElement(
+            'ul',
+            { className: 'list-unstyled' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'The change in price over one period of time is unrelated to the change in price over a disjoint period of time.'
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              'The change in log(price) over any period of time is normally distributed with a distribution depending only on the length of the period.'
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              'Samples of the distribution are continuous, with probability 100%.'
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'The geometric Brownian motion is a random process whose future probabilities are determined by its most recent values, otherwise known as a ',
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Markov process.'
+            ),
+            ' Past price information is already incorporated and the next price movement is ',
+            _react2.default.createElement(
+              'strong',
+              null,
+              'conditionally independent'
+            ),
+            ' of past price movements.'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'The formula for geometric Brownian Motion: '
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'text-center' },
+            _react2.default.createElement('img', { className: 'img-fluid', src: 'https://cdn-images-1.medium.com/max/800/0*tUnBZ2kUiDtZoANe.png' })
           )
         )
       );

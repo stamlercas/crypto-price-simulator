@@ -44,12 +44,17 @@ export default class Simulation extends React.Component {
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
-          pointBackgroundColor: '#fff',
           pointBorderWidth: 1,
           pointHoverRadius: 5,
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
+          borderColor: '#00A7E1',
+          backgroundColor: '#00A7E1',
+          pointBorderColor: '#00A7E1',
+          pointBackgroundColor: '#00A7E1',
+          pointHoverBackgroundColor: '#00A7E1',
+          pointHoverBorderColor: '#00A7E1',
           data: []
         }
       ]
