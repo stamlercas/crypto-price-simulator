@@ -1,6 +1,6 @@
 import React from 'react';
-import Dropdown from './Dropdown';
 import Analysis from './Analysis';
+
 export default class IndexPage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -46,7 +46,10 @@ export default class IndexPage extends React.Component {
 		    	}
 		    }
 		    return data;
-		}) ().then(res => self.setState({markets: res}));
+		}) ().then(res => {
+			self.setState({markets: res});
+			self.setState({market: res[0]});
+		});
 		this.handleFormChange(e);
 	}
 
@@ -75,18 +78,18 @@ export default class IndexPage extends React.Component {
 		<div>
 	    	<div className="row">
 		      <div className="col-md-6 offset-md-3">
-		      	<form onSubmit={this.handleSubmit} className="form-inline">
-				  <label className="mr-sm-2">Exchange</label>
+		      	<form onSubmit={this.handleSubmit} className="form-inline form-container">
+				  <label className="sr-only" htmlFor="exchange">Exchange</label>
 				  <select name="exchange" onChange={this.getMarkets}
-		      		className="custom-select mb-2 mr-sm-2 mb-sm-0"
+		      		className="form-check custom-select mb-2 mr-sm-2 mb-sm-0"
 		      		required>
 		      		<option value="" disabled selected>Choose an Exchange...</option>
 		      		{this.state.exchanges.map(item => {
 			      		return <option value={item}>{item}</option>;
 			      	})}
 		  		  </select>
-		  		  <select name="market" className="custom-select mb-2 mr-sm-2 mb-sm-0" onChange={this.handleFormChange} required>
-		  		  	<option value="" disabled selected>{ (this.state.exchange === '') ? 'Choose an Exchange' : '...' }</option>
+		  		  <select name="market" className="form-check custom-select mb-2 mr-sm-2 mb-sm-0" onChange={this.handleFormChange} required>
+		  		  	<option value="" disabled selected>{ (this.state.exchange === '') ? 'Markets' : '...' }</option>
 		      		{this.state.markets.map(item => {
 			      		return <option value={item.symbol}>{item.symbol}</option>;
 			      	})}
