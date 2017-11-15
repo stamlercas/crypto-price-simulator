@@ -13,10 +13,10 @@ export const Layout = props => (
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <Link className="nav-link" to="#">Home</Link>
+              <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#">About</Link>
+              <Link className="nav-link" to="/about">About</Link>
             </li>
           </ul>
         </div>
@@ -26,6 +26,9 @@ export const Layout = props => (
     <footer className="footer text-center">
     <div className="container">
         <span className="text-muted">A risk analysis application that uses geometric Brownian motion to forecast future cryptocurrency prices.</span>
+        <div>
+          <Link to="/">Home</Link> | <Link to="/about">About</Link>
+        </div>
       </div>
     </footer>
   </div>

@@ -247,40 +247,48 @@ export default class Simulations extends React.Component {
             </div>
             <h3>Analysis</h3>
             <div className="row">
-              <div className="offset-sm-2 col-sm-1 text-center alert-danger">
-                3sd
-                <br />
-                {this.state.simulationAnalysis.percentiles.sd3.low.toFixed(5)}
+              <div className="col-md-5">
+                  <div className="row">
+                    <div className="col-md-4 text-center alert-danger">
+                      3sd
+                      <br />
+                      {this.state.simulationAnalysis.percentiles.sd3.low.toFixed(5)}
+                    </div>
+                    <div className="col-md-4 text-center alert-warning">
+                        2sd
+                        <br />
+                        {this.state.simulationAnalysis.percentiles.sd2.low.toFixed(5)}
+                    </div>
+                    <div className="col-md-4 text-center alert-success">
+                        1sd
+                        <br />
+                        {this.state.simulationAnalysis.percentiles.sd1.low.toFixed(5)}
+                    </div>
+                  </div>
               </div>
-              <div className="col-sm-1 text-center alert-warning">
-                  2sd
-                  <br />
-                  {this.state.simulationAnalysis.percentiles.sd2.low.toFixed(5)}
-              </div>
-              <div className="col-sm-1 text-center alert-success">
-                  1sd
-                  <br />
-                  {this.state.simulationAnalysis.percentiles.sd1.low.toFixed(5)}
-              </div>
-              <div className="col-sm-2 text-center alert">
+              <div className="col-md-2 text-center">
                   Current
                   <br />
                   {this.state.simulationAnalysis.percentiles.cur.toFixed(5)}
               </div>
-              <div className=" col-sm-1 text-center alert-success">
-                  1sd
-                  <br />
-                  {this.state.simulationAnalysis.percentiles.sd1.high.toFixed(5)}
-              </div>
-              <div className="col-sm-1 text-center alert-warning">
-                  2sd
-                  <br />
-                  {this.state.simulationAnalysis.percentiles.sd2.high.toFixed(5)}
-              </div>
-              <div className="col-sm-1 text-center alert-danger">
-                  3sd
-                  <br />
-                  {this.state.simulationAnalysis.percentiles.sd3.high.toFixed(5)}
+              <div className="col-md-5">
+                  <div className="row">
+                    <div className=" col-md-4 text-center alert-success">
+                        1sd
+                        <br />
+                        {this.state.simulationAnalysis.percentiles.sd1.high.toFixed(5)}
+                    </div>
+                    <div className="col-md-4 text-center alert-warning">
+                        2sd
+                        <br />
+                        {this.state.simulationAnalysis.percentiles.sd2.high.toFixed(5)}
+                    </div>
+                    <div className="col-md-4 text-center alert-danger">
+                        3sd
+                        <br />
+                        {this.state.simulationAnalysis.percentiles.sd3.high.toFixed(5)}
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
