@@ -161,6 +161,7 @@ export default class Simulations extends React.Component {
     const data = this.getChartData();
     const options = {
       responsive: true,
+      scaleFontColor:'#f8f9fa',
       tooltips: {
         mode: 'label'
       },
@@ -236,43 +237,36 @@ export default class Simulations extends React.Component {
             <div className="row">
               <div className="col-md-5">
                   <div className="row">
-                    <div className="col-md-4 text-center alert-danger">
-                      3sd
-                      <br />
+                    <div className="col-md-4 text-center text-danger">
+                      <h4>3sd</h4>
                       {this.state.simulationAnalysis.percentiles.sd3.low.toFixed(5)}
                     </div>
-                    <div className="col-md-4 text-center alert-warning">
-                        2sd
-                        <br />
+                    <div className="col-md-4 text-center text-warning">
+                        <h4>2sd</h4>
                         {this.state.simulationAnalysis.percentiles.sd2.low.toFixed(5)}
                     </div>
-                    <div className="col-md-4 text-center alert-success">
-                        1sd
-                        <br />
+                    <div className="col-md-4 text-center text-success">
+                        <h4>1sd</h4>
                         {this.state.simulationAnalysis.percentiles.sd1.low.toFixed(5)}
                     </div>
                   </div>
               </div>
               <div className="col-md-2 text-center">
-                  Current
-                  <br />
+                  <h4>Current</h4>
                   {this.state.simulationAnalysis.percentiles.cur.toFixed(5)}
               </div>
               <div className="col-md-5">
                   <div className="row">
-                    <div className=" col-md-4 text-center alert-success">
-                        1sd
-                        <br />
+                    <div className=" col-md-4 text-center text-success">
+                        <h4>1sd</h4>
                         {this.state.simulationAnalysis.percentiles.sd1.high.toFixed(5)}
                     </div>
-                    <div className="col-md-4 text-center alert-warning">
-                        2sd
-                        <br />
+                    <div className="col-md-4 text-center text-warning">
+                        <h4>2sd</h4>
                         {this.state.simulationAnalysis.percentiles.sd2.high.toFixed(5)}
                     </div>
-                    <div className="col-md-4 text-center alert-danger">
-                        3sd
-                        <br />
+                    <div className="col-md-4 text-center text-danger">
+                        <h4>3sd</h4>
                         {this.state.simulationAnalysis.percentiles.sd3.high.toFixed(5)}
                     </div>
                   </div>
