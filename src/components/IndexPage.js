@@ -122,8 +122,8 @@ export default class IndexPage extends React.Component {
   	const data = (canvas) => {
   		const ctx = canvas.getContext("2d");
   		const gradient = ctx.createLinearGradient(0, 0, 0, 100);
-  		gradient.addColorStop(0, 'rgba(241, 254, 249, 0.8');
-  		gradient.addColorStop(1, 'rgba(241, 254, 249, 0');
+  		gradient.addColorStop(0, 'rgba(12, 206, 107, 0.8');
+  		gradient.addColorStop(1, 'rgba(12, 206, 107, 0');
   		
   		var labels = [];
 		for (var i = 0; i < this.state.graphData.length; i++)
@@ -145,11 +145,11 @@ export default class IndexPage extends React.Component {
 	          pointRadius: 1,
 	          pointHitRadius: 2,
 	          backgroundColor: gradient,
-	          borderColor: '#FBFEF9',
-	          pointBorderColor: '#FBFEF9',
-	          pointBackgroundColor: '#FBFEF9',
-	          pointHoverBackgroundColor: '#FBFEF9',
-	          pointHoverBorderColor: '#FBFEF9',
+	          borderColor: '#0CCE6B',
+	          pointBorderColor: '#0CCE6B',
+	          pointBackgroundColor: '#0CCE6B',
+	          pointHoverBackgroundColor: '#0CCE6B',
+	          pointHoverBorderColor: '#0CCE6B',
 	          data: this.state.graphData
 	        }
 	      ]
@@ -161,7 +161,7 @@ export default class IndexPage extends React.Component {
 	    		<div className="header-chart-container">
 		      			<Line data={data} options={this.options} legend={{display: false}} height={100} width={100}/>
 				</div>
-				<h1 className="display-3 text-center">CryptoCurrency Simulator</h1>
+				<h1 className="header">CryptoCurrency Simulator</h1>
 		      	<form onSubmit={this.handleSubmit} className="form-group">
 		      		<div className="input-group">
 						  <select name="exchange" onChange={this.getMarkets}

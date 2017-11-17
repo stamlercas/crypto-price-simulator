@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default class NotFoundPage extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{paddingTop: '30px'}}>
         <div>
           <h1>Running simulations can prepare us for the worst.</h1>
           <div>

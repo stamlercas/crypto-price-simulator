@@ -1,13 +1,22 @@
 @import "bootstrap_override";
 @import "~bootstrap/scss/bootstrap";
 
-
+hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
 html {
   position: relative;
   min-height: 100%;
 }
+h1 {
+    font-family: 'Fjalla One', sans-serif;
+    }
+h2 {
+    font-family: 'Cantarell', sans-serif;
+    }
 body {
   margin-bottom: 100px; /* Margin bottom by footer height */
+  font-family: 'Cantarell', sans-serif;
 }
 
 .custom-select {
@@ -43,6 +52,11 @@ body {
     border-radius: 0px 0px 10px 10px;
     border-top: 4px solid #DC1975;
     background-color: #1D144C;
+}
+
+.header {
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .header-chart-container {

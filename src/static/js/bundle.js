@@ -75824,8 +75824,8 @@ var IndexPage = function (_React$Component) {
 			var data = function data(canvas) {
 				var ctx = canvas.getContext("2d");
 				var gradient = ctx.createLinearGradient(0, 0, 0, 100);
-				gradient.addColorStop(0, 'rgba(241, 254, 249, 0.8');
-				gradient.addColorStop(1, 'rgba(241, 254, 249, 0');
+				gradient.addColorStop(0, 'rgba(12, 206, 107, 0.8');
+				gradient.addColorStop(1, 'rgba(12, 206, 107, 0');
 
 				var labels = [];
 				for (var i = 0; i < _this4.state.graphData.length; i++) {
@@ -75845,11 +75845,11 @@ var IndexPage = function (_React$Component) {
 						pointRadius: 1,
 						pointHitRadius: 2,
 						backgroundColor: gradient,
-						borderColor: '#FBFEF9',
-						pointBorderColor: '#FBFEF9',
-						pointBackgroundColor: '#FBFEF9',
-						pointHoverBackgroundColor: '#FBFEF9',
-						pointHoverBorderColor: '#FBFEF9',
+						borderColor: '#0CCE6B',
+						pointBorderColor: '#0CCE6B',
+						pointBackgroundColor: '#0CCE6B',
+						pointHoverBackgroundColor: '#0CCE6B',
+						pointHoverBorderColor: '#0CCE6B',
 						data: _this4.state.graphData
 					}]
 				};
@@ -75867,7 +75867,7 @@ var IndexPage = function (_React$Component) {
 					),
 					_react2.default.createElement(
 						'h1',
-						{ className: 'display-3 text-center' },
+						{ className: 'header' },
 						'CryptoCurrency Simulator'
 					),
 					_react2.default.createElement(
@@ -114657,7 +114657,7 @@ var NotFoundPage = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'container' },
+        { className: 'container', style: { paddingTop: '30px' } },
         _react2.default.createElement(
           'div',
           null,
