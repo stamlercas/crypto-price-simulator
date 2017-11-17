@@ -4531,7 +4531,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
 
 /***/ }),
 /* 1 */
@@ -5386,7 +5386,7 @@ module.exports = class Exchange {
 "use strict";
 
 
-module.exports = __webpack_require__(33);
+module.exports = __webpack_require__(34);
 module.exports.easing = __webpack_require__(278);
 module.exports.canvas = __webpack_require__(279);
 module.exports.options = __webpack_require__(280);
@@ -8210,7 +8210,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(76);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(51);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(264);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_9__StaticRouter__["a"]; });
@@ -8600,7 +8600,7 @@ module.exports = {
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(37),
+var Symbol = __webpack_require__(38),
     getRawTag = __webpack_require__(337),
     objectToString = __webpack_require__(338);
 
@@ -9615,2001 +9615,6 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
 
 /***/ }),
 /* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * @namespace Chart.helpers
- */
-var helpers = {
-	/**
-	 * An empty function that can be used, for example, for optional callback.
-	 */
-	noop: function() {},
-
-	/**
-	 * Returns a unique id, sequentially generated from a global variable.
-	 * @returns {Number}
-	 * @function
-	 */
-	uid: (function() {
-		var id = 0;
-		return function() {
-			return id++;
-		};
-	}()),
-
-	/**
-	 * Returns true if `value` is neither null nor undefined, else returns false.
-	 * @param {*} value - The value to test.
-	 * @returns {Boolean}
-	 * @since 2.7.0
-	 */
-	isNullOrUndef: function(value) {
-		return value === null || typeof value === 'undefined';
-	},
-
-	/**
-	 * Returns true if `value` is an array, else returns false.
-	 * @param {*} value - The value to test.
-	 * @returns {Boolean}
-	 * @function
-	 */
-	isArray: Array.isArray ? Array.isArray : function(value) {
-		return Object.prototype.toString.call(value) === '[object Array]';
-	},
-
-	/**
-	 * Returns true if `value` is an object (excluding null), else returns false.
-	 * @param {*} value - The value to test.
-	 * @returns {Boolean}
-	 * @since 2.7.0
-	 */
-	isObject: function(value) {
-		return value !== null && Object.prototype.toString.call(value) === '[object Object]';
-	},
-
-	/**
-	 * Returns `value` if defined, else returns `defaultValue`.
-	 * @param {*} value - The value to return if defined.
-	 * @param {*} defaultValue - The value to return if `value` is undefined.
-	 * @returns {*}
-	 */
-	valueOrDefault: function(value, defaultValue) {
-		return typeof value === 'undefined' ? defaultValue : value;
-	},
-
-	/**
-	 * Returns value at the given `index` in array if defined, else returns `defaultValue`.
-	 * @param {Array} value - The array to lookup for value at `index`.
-	 * @param {Number} index - The index in `value` to lookup for value.
-	 * @param {*} defaultValue - The value to return if `value[index]` is undefined.
-	 * @returns {*}
-	 */
-	valueAtIndexOrDefault: function(value, index, defaultValue) {
-		return helpers.valueOrDefault(helpers.isArray(value) ? value[index] : value, defaultValue);
-	},
-
-	/**
-	 * Calls `fn` with the given `args` in the scope defined by `thisArg` and returns the
-	 * value returned by `fn`. If `fn` is not a function, this method returns undefined.
-	 * @param {Function} fn - The function to call.
-	 * @param {Array|undefined|null} args - The arguments with which `fn` should be called.
-	 * @param {Object} [thisArg] - The value of `this` provided for the call to `fn`.
-	 * @returns {*}
-	 */
-	callback: function(fn, args, thisArg) {
-		if (fn && typeof fn.call === 'function') {
-			return fn.apply(thisArg, args);
-		}
-	},
-
-	/**
-	 * Note(SB) for performance sake, this method should only be used when loopable type
-	 * is unknown or in none intensive code (not called often and small loopable). Else
-	 * it's preferable to use a regular for() loop and save extra function calls.
-	 * @param {Object|Array} loopable - The object or array to be iterated.
-	 * @param {Function} fn - The function to call for each item.
-	 * @param {Object} [thisArg] - The value of `this` provided for the call to `fn`.
-	 * @param {Boolean} [reverse] - If true, iterates backward on the loopable.
-	 */
-	each: function(loopable, fn, thisArg, reverse) {
-		var i, len, keys;
-		if (helpers.isArray(loopable)) {
-			len = loopable.length;
-			if (reverse) {
-				for (i = len - 1; i >= 0; i--) {
-					fn.call(thisArg, loopable[i], i);
-				}
-			} else {
-				for (i = 0; i < len; i++) {
-					fn.call(thisArg, loopable[i], i);
-				}
-			}
-		} else if (helpers.isObject(loopable)) {
-			keys = Object.keys(loopable);
-			len = keys.length;
-			for (i = 0; i < len; i++) {
-				fn.call(thisArg, loopable[keys[i]], keys[i]);
-			}
-		}
-	},
-
-	/**
-	 * Returns true if the `a0` and `a1` arrays have the same content, else returns false.
-	 * @see http://stackoverflow.com/a/14853974
-	 * @param {Array} a0 - The array to compare
-	 * @param {Array} a1 - The array to compare
-	 * @returns {Boolean}
-	 */
-	arrayEquals: function(a0, a1) {
-		var i, ilen, v0, v1;
-
-		if (!a0 || !a1 || a0.length !== a1.length) {
-			return false;
-		}
-
-		for (i = 0, ilen = a0.length; i < ilen; ++i) {
-			v0 = a0[i];
-			v1 = a1[i];
-
-			if (v0 instanceof Array && v1 instanceof Array) {
-				if (!helpers.arrayEquals(v0, v1)) {
-					return false;
-				}
-			} else if (v0 !== v1) {
-				// NOTE: two different object instances will never be equal: {x:20} != {x:20}
-				return false;
-			}
-		}
-
-		return true;
-	},
-
-	/**
-	 * Returns a deep copy of `source` without keeping references on objects and arrays.
-	 * @param {*} source - The value to clone.
-	 * @returns {*}
-	 */
-	clone: function(source) {
-		if (helpers.isArray(source)) {
-			return source.map(helpers.clone);
-		}
-
-		if (helpers.isObject(source)) {
-			var target = {};
-			var keys = Object.keys(source);
-			var klen = keys.length;
-			var k = 0;
-
-			for (; k < klen; ++k) {
-				target[keys[k]] = helpers.clone(source[keys[k]]);
-			}
-
-			return target;
-		}
-
-		return source;
-	},
-
-	/**
-	 * The default merger when Chart.helpers.merge is called without merger option.
-	 * Note(SB): this method is also used by configMerge and scaleMerge as fallback.
-	 * @private
-	 */
-	_merger: function(key, target, source, options) {
-		var tval = target[key];
-		var sval = source[key];
-
-		if (helpers.isObject(tval) && helpers.isObject(sval)) {
-			helpers.merge(tval, sval, options);
-		} else {
-			target[key] = helpers.clone(sval);
-		}
-	},
-
-	/**
-	 * Merges source[key] in target[key] only if target[key] is undefined.
-	 * @private
-	 */
-	_mergerIf: function(key, target, source) {
-		var tval = target[key];
-		var sval = source[key];
-
-		if (helpers.isObject(tval) && helpers.isObject(sval)) {
-			helpers.mergeIf(tval, sval);
-		} else if (!target.hasOwnProperty(key)) {
-			target[key] = helpers.clone(sval);
-		}
-	},
-
-	/**
-	 * Recursively deep copies `source` properties into `target` with the given `options`.
-	 * IMPORTANT: `target` is not cloned and will be updated with `source` properties.
-	 * @param {Object} target - The target object in which all sources are merged into.
-	 * @param {Object|Array(Object)} source - Object(s) to merge into `target`.
-	 * @param {Object} [options] - Merging options:
-	 * @param {Function} [options.merger] - The merge method (key, target, source, options)
-	 * @returns {Object} The `target` object.
-	 */
-	merge: function(target, source, options) {
-		var sources = helpers.isArray(source) ? source : [source];
-		var ilen = sources.length;
-		var merge, i, keys, klen, k;
-
-		if (!helpers.isObject(target)) {
-			return target;
-		}
-
-		options = options || {};
-		merge = options.merger || helpers._merger;
-
-		for (i = 0; i < ilen; ++i) {
-			source = sources[i];
-			if (!helpers.isObject(source)) {
-				continue;
-			}
-
-			keys = Object.keys(source);
-			for (k = 0, klen = keys.length; k < klen; ++k) {
-				merge(keys[k], target, source, options);
-			}
-		}
-
-		return target;
-	},
-
-	/**
-	 * Recursively deep copies `source` properties into `target` *only* if not defined in target.
-	 * IMPORTANT: `target` is not cloned and will be updated with `source` properties.
-	 * @param {Object} target - The target object in which all sources are merged into.
-	 * @param {Object|Array(Object)} source - Object(s) to merge into `target`.
-	 * @returns {Object} The `target` object.
-	 */
-	mergeIf: function(target, source) {
-		return helpers.merge(target, source, {merger: helpers._mergerIf});
-	},
-
-	/**
-	 * Applies the contents of two or more objects together into the first object.
-	 * @param {Object} target - The target object in which all objects are merged into.
-	 * @param {Object} arg1 - Object containing additional properties to merge in target.
-	 * @param {Object} argN - Additional objects containing properties to merge in target.
-	 * @returns {Object} The `target` object.
-	 */
-	extend: function(target) {
-		var setFn = function(value, key) {
-			target[key] = value;
-		};
-		for (var i = 1, ilen = arguments.length; i < ilen; ++i) {
-			helpers.each(arguments[i], setFn);
-		}
-		return target;
-	},
-
-	/**
-	 * Basic javascript inheritance based on the model created in Backbone.js
-	 */
-	inherits: function(extensions) {
-		var me = this;
-		var ChartElement = (extensions && extensions.hasOwnProperty('constructor')) ? extensions.constructor : function() {
-			return me.apply(this, arguments);
-		};
-
-		var Surrogate = function() {
-			this.constructor = ChartElement;
-		};
-
-		Surrogate.prototype = me.prototype;
-		ChartElement.prototype = new Surrogate();
-		ChartElement.extend = helpers.inherits;
-
-		if (extensions) {
-			helpers.extend(ChartElement.prototype, extensions);
-		}
-
-		ChartElement.__super__ = me.prototype;
-		return ChartElement;
-	}
-};
-
-module.exports = helpers;
-
-// DEPRECATIONS
-
-/**
- * Provided for backward compatibility, use Chart.helpers.callback instead.
- * @function Chart.helpers.callCallback
- * @deprecated since version 2.6.0
- * @todo remove at version 3
- * @private
- */
-helpers.callCallback = helpers.callback;
-
-/**
- * Provided for backward compatibility, use Array.prototype.indexOf instead.
- * Array.prototype.indexOf compatibility: Chrome, Opera, Safari, FF1.5+, IE9+
- * @function Chart.helpers.indexOf
- * @deprecated since version 2.7.0
- * @todo remove at version 3
- * @private
- */
-helpers.indexOf = function(array, item, fromIndex) {
-	return Array.prototype.indexOf.call(array, item, fromIndex);
-};
-
-/**
- * Provided for backward compatibility, use Chart.helpers.valueOrDefault instead.
- * @function Chart.helpers.getValueOrDefault
- * @deprecated since version 2.7.0
- * @todo remove at version 3
- * @private
- */
-helpers.getValueOrDefault = helpers.valueOrDefault;
-
-/**
- * Provided for backward compatibility, use Chart.helpers.valueAtIndexOrDefault instead.
- * @function Chart.helpers.getValueAtIndexOrDefault
- * @deprecated since version 2.7.0
- * @todo remove at version 3
- * @private
- */
-helpers.getValueAtIndexOrDefault = helpers.valueAtIndexOrDefault;
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var listCacheClear = __webpack_require__(326),
-    listCacheDelete = __webpack_require__(327),
-    listCacheGet = __webpack_require__(328),
-    listCacheHas = __webpack_require__(329),
-    listCacheSet = __webpack_require__(330);
-
-/**
- * Creates an list cache object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function ListCache(entries) {
-  var index = -1,
-      length = entries == null ? 0 : entries.length;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-// Add methods to `ListCache`.
-ListCache.prototype.clear = listCacheClear;
-ListCache.prototype['delete'] = listCacheDelete;
-ListCache.prototype.get = listCacheGet;
-ListCache.prototype.has = listCacheHas;
-ListCache.prototype.set = listCacheSet;
-
-module.exports = ListCache;
-
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var eq = __webpack_require__(198);
-
-/**
- * Gets the index at which the `key` is found in `array` of key-value pairs.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} key The key to search for.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function assocIndexOf(array, key) {
-  var length = array.length;
-  while (length--) {
-    if (eq(array[length][0], key)) {
-      return length;
-    }
-  }
-  return -1;
-}
-
-module.exports = assocIndexOf;
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var root = __webpack_require__(12);
-
-/** Built-in value references. */
-var Symbol = root.Symbol;
-
-module.exports = Symbol;
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
-}
-
-module.exports = isObject;
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var getNative = __webpack_require__(18);
-
-/* Built-in method references that are verified to be native. */
-var nativeCreate = getNative(Object, 'create');
-
-module.exports = nativeCreate;
-
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isKeyable = __webpack_require__(350);
-
-/**
- * Gets the data for `map`.
- *
- * @private
- * @param {Object} map The map to query.
- * @param {string} key The reference key.
- * @returns {*} Returns the map data.
- */
-function getMapData(map, key) {
-  var data = map.__data__;
-  return isKeyable(key)
-    ? data[typeof key == 'string' ? 'string' : 'hash']
-    : data.map;
-}
-
-module.exports = getMapData;
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseGetTag = __webpack_require__(26),
-    isObjectLike = __webpack_require__(27);
-
-/** `Object#toString` result references. */
-var symbolTag = '[object Symbol]';
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && baseGetTag(value) == symbolTag);
-}
-
-module.exports = isSymbol;
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isSymbol = __webpack_require__(41);
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0;
-
-/**
- * Converts `value` to a string key if it's not a string or symbol.
- *
- * @private
- * @param {*} value The value to inspect.
- * @returns {string|symbol} Returns the key.
- */
-function toKey(value) {
-  if (typeof value == 'string' || isSymbol(value)) {
-    return value;
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-
-module.exports = toKey;
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-;(function (root, factory) {
-	if (true) {
-		// CommonJS
-		module.exports = exports = factory(__webpack_require__(4));
-	}
-	else if (typeof define === "function" && define.amd) {
-		// AMD
-		define(["./core"], factory);
-	}
-	else {
-		// Global (browser)
-		factory(root.CryptoJS);
-	}
-}(this, function (CryptoJS) {
-
-	(function (undefined) {
-	    // Shortcuts
-	    var C = CryptoJS;
-	    var C_lib = C.lib;
-	    var Base = C_lib.Base;
-	    var X32WordArray = C_lib.WordArray;
-
-	    /**
-	     * x64 namespace.
-	     */
-	    var C_x64 = C.x64 = {};
-
-	    /**
-	     * A 64-bit word.
-	     */
-	    var X64Word = C_x64.Word = Base.extend({
-	        /**
-	         * Initializes a newly created 64-bit word.
-	         *
-	         * @param {number} high The high 32 bits.
-	         * @param {number} low The low 32 bits.
-	         *
-	         * @example
-	         *
-	         *     var x64Word = CryptoJS.x64.Word.create(0x00010203, 0x04050607);
-	         */
-	        init: function (high, low) {
-	            this.high = high;
-	            this.low = low;
-	        }
-
-	        /**
-	         * Bitwise NOTs this word.
-	         *
-	         * @return {X64Word} A new x64-Word object after negating.
-	         *
-	         * @example
-	         *
-	         *     var negated = x64Word.not();
-	         */
-	        // not: function () {
-	            // var high = ~this.high;
-	            // var low = ~this.low;
-
-	            // return X64Word.create(high, low);
-	        // },
-
-	        /**
-	         * Bitwise ANDs this word with the passed word.
-	         *
-	         * @param {X64Word} word The x64-Word to AND with this word.
-	         *
-	         * @return {X64Word} A new x64-Word object after ANDing.
-	         *
-	         * @example
-	         *
-	         *     var anded = x64Word.and(anotherX64Word);
-	         */
-	        // and: function (word) {
-	            // var high = this.high & word.high;
-	            // var low = this.low & word.low;
-
-	            // return X64Word.create(high, low);
-	        // },
-
-	        /**
-	         * Bitwise ORs this word with the passed word.
-	         *
-	         * @param {X64Word} word The x64-Word to OR with this word.
-	         *
-	         * @return {X64Word} A new x64-Word object after ORing.
-	         *
-	         * @example
-	         *
-	         *     var ored = x64Word.or(anotherX64Word);
-	         */
-	        // or: function (word) {
-	            // var high = this.high | word.high;
-	            // var low = this.low | word.low;
-
-	            // return X64Word.create(high, low);
-	        // },
-
-	        /**
-	         * Bitwise XORs this word with the passed word.
-	         *
-	         * @param {X64Word} word The x64-Word to XOR with this word.
-	         *
-	         * @return {X64Word} A new x64-Word object after XORing.
-	         *
-	         * @example
-	         *
-	         *     var xored = x64Word.xor(anotherX64Word);
-	         */
-	        // xor: function (word) {
-	            // var high = this.high ^ word.high;
-	            // var low = this.low ^ word.low;
-
-	            // return X64Word.create(high, low);
-	        // },
-
-	        /**
-	         * Shifts this word n bits to the left.
-	         *
-	         * @param {number} n The number of bits to shift.
-	         *
-	         * @return {X64Word} A new x64-Word object after shifting.
-	         *
-	         * @example
-	         *
-	         *     var shifted = x64Word.shiftL(25);
-	         */
-	        // shiftL: function (n) {
-	            // if (n < 32) {
-	                // var high = (this.high << n) | (this.low >>> (32 - n));
-	                // var low = this.low << n;
-	            // } else {
-	                // var high = this.low << (n - 32);
-	                // var low = 0;
-	            // }
-
-	            // return X64Word.create(high, low);
-	        // },
-
-	        /**
-	         * Shifts this word n bits to the right.
-	         *
-	         * @param {number} n The number of bits to shift.
-	         *
-	         * @return {X64Word} A new x64-Word object after shifting.
-	         *
-	         * @example
-	         *
-	         *     var shifted = x64Word.shiftR(7);
-	         */
-	        // shiftR: function (n) {
-	            // if (n < 32) {
-	                // var low = (this.low >>> n) | (this.high << (32 - n));
-	                // var high = this.high >>> n;
-	            // } else {
-	                // var low = this.high >>> (n - 32);
-	                // var high = 0;
-	            // }
-
-	            // return X64Word.create(high, low);
-	        // },
-
-	        /**
-	         * Rotates this word n bits to the left.
-	         *
-	         * @param {number} n The number of bits to rotate.
-	         *
-	         * @return {X64Word} A new x64-Word object after rotating.
-	         *
-	         * @example
-	         *
-	         *     var rotated = x64Word.rotL(25);
-	         */
-	        // rotL: function (n) {
-	            // return this.shiftL(n).or(this.shiftR(64 - n));
-	        // },
-
-	        /**
-	         * Rotates this word n bits to the right.
-	         *
-	         * @param {number} n The number of bits to rotate.
-	         *
-	         * @return {X64Word} A new x64-Word object after rotating.
-	         *
-	         * @example
-	         *
-	         *     var rotated = x64Word.rotR(7);
-	         */
-	        // rotR: function (n) {
-	            // return this.shiftR(n).or(this.shiftL(64 - n));
-	        // },
-
-	        /**
-	         * Adds this word with the passed word.
-	         *
-	         * @param {X64Word} word The x64-Word to add with this word.
-	         *
-	         * @return {X64Word} A new x64-Word object after adding.
-	         *
-	         * @example
-	         *
-	         *     var added = x64Word.add(anotherX64Word);
-	         */
-	        // add: function (word) {
-	            // var low = (this.low + word.low) | 0;
-	            // var carry = (low >>> 0) < (this.low >>> 0) ? 1 : 0;
-	            // var high = (this.high + word.high + carry) | 0;
-
-	            // return X64Word.create(high, low);
-	        // }
-	    });
-
-	    /**
-	     * An array of 64-bit words.
-	     *
-	     * @property {Array} words The array of CryptoJS.x64.Word objects.
-	     * @property {number} sigBytes The number of significant bytes in this word array.
-	     */
-	    var X64WordArray = C_x64.WordArray = Base.extend({
-	        /**
-	         * Initializes a newly created word array.
-	         *
-	         * @param {Array} words (Optional) An array of CryptoJS.x64.Word objects.
-	         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
-	         *
-	         * @example
-	         *
-	         *     var wordArray = CryptoJS.x64.WordArray.create();
-	         *
-	         *     var wordArray = CryptoJS.x64.WordArray.create([
-	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
-	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
-	         *     ]);
-	         *
-	         *     var wordArray = CryptoJS.x64.WordArray.create([
-	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
-	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
-	         *     ], 10);
-	         */
-	        init: function (words, sigBytes) {
-	            words = this.words = words || [];
-
-	            if (sigBytes != undefined) {
-	                this.sigBytes = sigBytes;
-	            } else {
-	                this.sigBytes = words.length * 8;
-	            }
-	        },
-
-	        /**
-	         * Converts this 64-bit word array to a 32-bit word array.
-	         *
-	         * @return {CryptoJS.lib.WordArray} This word array's data as a 32-bit word array.
-	         *
-	         * @example
-	         *
-	         *     var x32WordArray = x64WordArray.toX32();
-	         */
-	        toX32: function () {
-	            // Shortcuts
-	            var x64Words = this.words;
-	            var x64WordsLength = x64Words.length;
-
-	            // Convert
-	            var x32Words = [];
-	            for (var i = 0; i < x64WordsLength; i++) {
-	                var x64Word = x64Words[i];
-	                x32Words.push(x64Word.high);
-	                x32Words.push(x64Word.low);
-	            }
-
-	            return X32WordArray.create(x32Words, this.sigBytes);
-	        },
-
-	        /**
-	         * Creates a copy of this word array.
-	         *
-	         * @return {X64WordArray} The clone.
-	         *
-	         * @example
-	         *
-	         *     var clone = x64WordArray.clone();
-	         */
-	        clone: function () {
-	            var clone = Base.clone.call(this);
-
-	            // Clone "words" array
-	            var words = clone.words = this.words.slice(0);
-
-	            // Clone each X64Word object
-	            var wordsLength = words.length;
-	            for (var i = 0; i < wordsLength; i++) {
-	                words[i] = words[i].clone();
-	            }
-
-	            return clone;
-	        }
-	    });
-	}());
-
-
-	return CryptoJS;
-
-}));
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-//  ---------------------------------------------------------------------------
-
-const Exchange = __webpack_require__ (2)
-const { ExchangeError, InsufficientFunds, OrderNotFound, DDoSProtection } = __webpack_require__ (1)
-
-//  ---------------------------------------------------------------------------
-
-module.exports = class okcoinusd extends Exchange {
-
-    describe () {
-        return this.deepExtend (super.describe (), {
-            'id': 'okcoinusd',
-            'name': 'OKCoin USD',
-            'countries': [ 'CN', 'US' ],
-            'hasCORS': false,
-            'version': 'v1',
-            'rateLimit': 1000, // up to 3000 requests per 5 minutes ≈ 600 requests per minute ≈ 10 requests per second ≈ 100 ms
-            'hasFetchOHLCV': true,
-            'hasFetchOrder': true,
-            'hasFetchOrders': true,
-            'hasFetchOpenOrders': true,
-            'hasFetchClosedOrders': true,
-            'extension': '.do', // appended to endpoint URL
-            'timeframes': {
-                '1m': '1min',
-                '3m': '3min',
-                '5m': '5min',
-                '15m': '15min',
-                '30m': '30min',
-                '1h': '1hour',
-                '2h': '2hour',
-                '4h': '4hour',
-                '6h': '6hour',
-                '12h': '12hour',
-                '1d': '1day',
-                '3d': '3day',
-                '1w': '1week',
-            },
-            'api': {
-                'public': {
-                    'get': [
-                        'depth',
-                        'exchange_rate',
-                        'future_depth',
-                        'future_estimated_price',
-                        'future_hold_amount',
-                        'future_index',
-                        'future_kline',
-                        'future_price_limit',
-                        'future_ticker',
-                        'future_trades',
-                        'kline',
-                        'otcs',
-                        'ticker',
-                        'trades',
-                    ],
-                },
-                'private': {
-                    'post': [
-                        'account_records',
-                        'batch_trade',
-                        'borrow_money',
-                        'borrow_order_info',
-                        'borrows_info',
-                        'cancel_borrow',
-                        'cancel_order',
-                        'cancel_otc_order',
-                        'cancel_withdraw',
-                        'future_batch_trade',
-                        'future_cancel',
-                        'future_devolve',
-                        'future_explosive',
-                        'future_order_info',
-                        'future_orders_info',
-                        'future_position',
-                        'future_position_4fix',
-                        'future_trade',
-                        'future_trades_history',
-                        'future_userinfo',
-                        'future_userinfo_4fix',
-                        'lend_depth',
-                        'order_fee',
-                        'order_history',
-                        'order_info',
-                        'orders_info',
-                        'otc_order_history',
-                        'otc_order_info',
-                        'repayment',
-                        'submit_otc_order',
-                        'trade',
-                        'trade_history',
-                        'trade_otc_order',
-                        'withdraw',
-                        'withdraw_info',
-                        'unrepayments_info',
-                        'userinfo',
-                    ],
-                },
-            },
-            'urls': {
-                'logo': 'https://user-images.githubusercontent.com/1294454/27766791-89ffb502-5ee5-11e7-8a5b-c5950b68ac65.jpg',
-                'api': {
-                    'web': 'https://www.okcoin.com',
-                    'public': 'https://www.okcoin.com/api',
-                    'private': 'https://www.okcoin.com/api',
-                },
-                'www': 'https://www.okcoin.com',
-                'doc': [
-                    'https://www.okcoin.com/rest_getStarted.html',
-                    'https://www.npmjs.com/package/okcoin.com',
-                ],
-            },
-            'markets': {
-                'BTC/USD': { 'id': 'btc_usd', 'symbol': 'BTC/USD', 'base': 'BTC', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
-                'LTC/USD': { 'id': 'ltc_usd', 'symbol': 'LTC/USD', 'base': 'LTC', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
-                'ETH/USD': { 'id': 'eth_usd', 'symbol': 'ETH/USD', 'base': 'ETH', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
-                'ETC/USD': { 'id': 'etc_usd', 'symbol': 'ETC/USD', 'base': 'ETC', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
-            },
-        });
-    }
-
-    async fetchOrderBook (symbol, params = {}) {
-        await this.loadMarkets ();
-        let market = this.market (symbol);
-        let method = 'publicGet';
-        let request = {
-            'symbol': market['id'],
-        };
-        if (market['future']) {
-            method += 'Future';
-            request['contract_type'] = 'this_week'; // next_week, quarter
-        }
-        method += 'Depth';
-        let orderbook = await this[method] (this.extend (request, params));
-        let timestamp = this.milliseconds ();
-        return {
-            'bids': orderbook['bids'],
-            'asks': this.sortBy (orderbook['asks'], 0),
-            'timestamp': timestamp,
-            'datetime': this.iso8601 (timestamp),
-        };
-    }
-
-    parseTicker (ticker, market = undefined) {
-        let timestamp = ticker['timestamp'];
-        let symbol = undefined;
-        if (market)
-            symbol = market['symbol'];
-        return {
-            'symbol': symbol,
-            'timestamp': timestamp,
-            'datetime': this.iso8601 (timestamp),
-            'high': parseFloat (ticker['high']),
-            'low': parseFloat (ticker['low']),
-            'bid': parseFloat (ticker['buy']),
-            'ask': parseFloat (ticker['sell']),
-            'vwap': undefined,
-            'open': undefined,
-            'close': undefined,
-            'first': undefined,
-            'last': parseFloat (ticker['last']),
-            'change': undefined,
-            'percentage': undefined,
-            'average': undefined,
-            'baseVolume': undefined,
-            'quoteVolume': parseFloat (ticker['vol']),
-            'info': ticker,
-        };
-    }
-
-    async fetchTicker (symbol, params = {}) {
-        await this.loadMarkets ();
-        let market = this.market (symbol);
-        let method = 'publicGet';
-        let request = {
-            'symbol': market['id'],
-        };
-        if (market['future']) {
-            method += 'Future';
-            request['contract_type'] = 'this_week'; // next_week, quarter
-        }
-        method += 'Ticker';
-        let response = await this[method] (this.extend (request, params));
-        let timestamp = parseInt (response['date']) * 1000;
-        let ticker = this.extend (response['ticker'], { 'timestamp': timestamp });
-        return this.parseTicker (ticker, market);
-    }
-
-    parseTrade (trade, market = undefined) {
-        let symbol = undefined;
-        if (market)
-            symbol = market['symbol'];
-        return {
-            'info': trade,
-            'timestamp': trade['date_ms'],
-            'datetime': this.iso8601 (trade['date_ms']),
-            'symbol': symbol,
-            'id': trade['tid'].toString (),
-            'order': undefined,
-            'type': undefined,
-            'side': trade['type'],
-            'price': parseFloat (trade['price']),
-            'amount': parseFloat (trade['amount']),
-        };
-    }
-
-    async fetchTrades (symbol, params = {}) {
-        await this.loadMarkets ();
-        let market = this.market (symbol);
-        let method = 'publicGet';
-        let request = {
-            'symbol': market['id'],
-        };
-        if (market['future']) {
-            method += 'Future';
-            request['contract_type'] = 'this_week'; // next_week, quarter
-        }
-        method += 'Trades';
-        let response = await this[method] (this.extend (request, params));
-        return this.parseTrades (response, market);
-    }
-
-    async fetchOHLCV (symbol, timeframe = '1m', since = undefined, limit = 1440, params = {}) {
-        await this.loadMarkets ();
-        let market = this.market (symbol);
-        let method = 'publicGet';
-        let request = {
-            'symbol': market['id'],
-            'type': this.timeframes[timeframe],
-        };
-        if (market['future']) {
-            method += 'Future';
-            request['contract_type'] = 'this_week'; // next_week, quarter
-        }
-        method += 'Kline';
-        if (limit)
-            request['size'] = parseInt (limit);
-        if (since) {
-            request['since'] = since;
-        } else {
-            request['since'] = this.milliseconds () - 86400000; // last 24 hours
-        }
-        let response = await this[method] (this.extend (request, params));
-        return this.parseOHLCVs (response, market, timeframe, since, limit);
-    }
-
-    async fetchBalance (params = {}) {
-        await this.loadMarkets ();
-        let response = await this.privatePostUserinfo ();
-        let balances = response['info']['funds'];
-        let result = { 'info': response };
-        for (let c = 0; c < this.currencies.length; c++) {
-            let currency = this.currencies[c];
-            let lowercase = currency.toLowerCase ();
-            let account = this.account ();
-            account['free'] = this.safeFloat (balances['free'], lowercase, 0.0);
-            account['used'] = this.safeFloat (balances['freezed'], lowercase, 0.0);
-            account['total'] = this.sum (account['free'], account['used']);
-            result[currency] = account;
-        }
-        return this.parseBalance (result);
-    }
-
-    async createOrder (symbol, type, side, amount, price = undefined, params = {}) {
-        await this.loadMarkets ();
-        let market = this.market (symbol);
-        let method = 'privatePost';
-        let order = {
-            'symbol': market['id'],
-            'type': side,
-        };
-        if (market['future']) {
-            method += 'Future';
-            order = this.extend (order, {
-                'contract_type': 'this_week', // next_week, quarter
-                'match_price': 0, // match best counter party price? 0 or 1, ignores price if 1
-                'lever_rate': 10, // leverage rate value: 10 or 20 (10 by default)
-                'price': price,
-                'amount': amount,
-            });
-        } else {
-            if (type == 'limit') {
-                order['price'] = price;
-                order['amount'] = amount;
-            } else {
-                order['type'] += '_market';
-                if (side == 'buy') {
-                    order['price'] = this.safeFloat (params, 'cost');
-                    if (!order['price'])
-                        throw new ExchangeError (this.id + ' market buy orders require an additional cost parameter, cost = price * amount');
-                } else {
-                    order['amount'] = amount;
-                }
-            }
-        }
-        params = this.omit (params, 'cost');
-        method += 'Trade';
-        let response = await this[method] (this.extend (order, params));
-        return {
-            'info': response,
-            'id': response['order_id'].toString (),
-        };
-    }
-
-    async cancelOrder (id, symbol = undefined, params = {}) {
-        if (!symbol)
-            throw new ExchangeError (this.id + ' cancelOrder() requires a symbol argument');
-        let market = this.market (symbol);
-        let request = {
-            'symbol': market['id'],
-            'order_id': id,
-        };
-        let method = 'privatePost';
-        if (market['future']) {
-            method += 'FutureCancel';
-            request['contract_type'] = 'this_week'; // next_week, quarter
-        } else {
-            method += 'CancelOrder';
-        }
-        let response = await this[method] (this.extend (request, params));
-        return response;
-    }
-
-    parseOrderStatus (status) {
-        if (status == -1)
-            return 'canceled';
-        if (status == 0)
-            return 'open';
-        if (status == 1)
-            return 'partial';
-        if (status == 2)
-            return 'closed';
-        if (status == 4)
-            return 'canceled';
-        return status;
-    }
-
-    parseOrder (order, market = undefined) {
-        let side = undefined;
-        let type = undefined;
-        if ('type' in order) {
-            if ((order['type'] == 'buy') || (order['type'] == 'sell')) {
-                side = order['type'];
-                type = 'limit';
-            } else {
-                side = (order['type'] == 'buy_market') ? 'buy' : 'sell';
-                type = 'market';
-            }
-        }
-        let status = this.parseOrderStatus (order['status']);
-        let symbol = undefined;
-        if (!market) {
-            if ('symbol' in order)
-                if (order['symbol'] in this.markets_by_id)
-                    market = this.markets_by_id[order['symbol']];
-        }
-        if (market)
-            symbol = market['symbol'];
-        let timestamp = undefined;
-        if ('create_date' in order)
-            timestamp = order['create_date'];
-        let amount = order['amount'];
-        let filled = order['deal_amount'];
-        let remaining = amount - filled;
-        let average = order['avg_price'];
-        let cost = average * filled;
-        let result = {
-            'info': order,
-            'id': order['order_id'],
-            'timestamp': timestamp,
-            'datetime': this.iso8601 (timestamp),
-            'symbol': symbol,
-            'type': type,
-            'side': side,
-            'price': order['price'],
-            'average': average,
-            'cost': cost,
-            'amount': amount,
-            'filled': filled,
-            'remaining': remaining,
-            'status': status,
-            'fee': undefined,
-        };
-        return result;
-    }
-
-    async fetchOrder (id, symbol = undefined, params = {}) {
-        if (!symbol)
-            throw new ExchangeError (this.id + 'fetchOrders requires a symbol parameter');
-        await this.loadMarkets ();
-        let market = this.market (symbol);
-        let method = 'privatePost';
-        let request = {
-            'order_id': id,
-            'symbol': market['id'],
-            // 'status': 0, // 0 for unfilled orders, 1 for filled orders
-            // 'current_page': 1, // current page number
-            // 'page_length': 200, // number of orders returned per page, maximum 200
-        };
-        if (market['future']) {
-            method += 'Future';
-            request['contract_type'] = 'this_week'; // next_week, quarter
-        }
-        method += 'OrderInfo';
-        let response = await this[method] (this.extend (request, params));
-        return this.parseOrder (response['orders'][0]);
-    }
-
-    async fetchOrders (symbol = undefined, params = {}) {
-        if (!symbol)
-            throw new ExchangeError (this.id + 'fetchOrders requires a symbol parameter');
-        await this.loadMarkets ();
-        let market = this.market (symbol);
-        let method = 'privatePost';
-        let request = {
-            'symbol': market['id'],
-        };
-        let order_id_in_params = ('order_id' in params);
-        if (market['future']) {
-            method += 'FutureOrdersInfo';
-            request['contract_type'] = 'this_week'; // next_week, quarter
-            if (!order_id_in_params)
-                throw new ExchangeError (this.id + ' fetchOrders() requires order_id param for futures market ' + symbol + ' (a string of one or more order ids, comma-separated)');
-        } else {
-            let type = this.safeValue (params, 'type');
-            let status = this.safeValue (params, 'status');
-            if (type) {
-                status = params['type'];
-            } else if (status) {
-                status = params['status'];
-            } else {
-                throw new ExchangeError (this.id + ' fetchOrders() requires type param or status param for spot market ' + symbol + ' (0 or "open" for unfilled orders, 1 or "closed" for filled orders)');
-            }
-            if (status == 'open')
-                status = 0;
-            if (status == 'closed')
-                status = 1;
-            if (order_id_in_params) {
-                method += 'OrdersInfo';
-                request = this.extend (request, {
-                    'type': status,
-                });
-            } else {
-                method += 'OrderHistory';
-                request = this.extend (request, {
-                    'status': status,
-                    'current_page': 1, // current page number
-                    'page_length': 200, // number of orders returned per page, maximum 200
-                });
-            }
-            params = this.omit (params, [ 'type', 'status' ]);
-        }
-        let response = await this[method] (this.extend (request, params));
-        return this.parseOrders (response['orders'], market);
-    }
-
-    async fetchOpenOrders (symbol = undefined, params = {}) {
-        let open = 0; // 0 for unfilled orders, 1 for filled orders
-        return await this.fetchOrders (symbol, this.extend ({
-            'status': open,
-        }, params));
-    }
-
-    async fetchClosedOrders (symbol = undefined, params = {}) {
-        let closed = 1; // 0 for unfilled orders, 1 for filled orders
-        return await this.fetchOrders (symbol, this.extend ({
-            'status': closed,
-        }, params));
-    }
-
-    sign (path, api = 'public', method = 'GET', params = {}, headers = undefined, body = undefined) {
-        let url = '/';
-        if (api != 'web')
-            url += this.version + '/';
-        url += path + this.extension;
-        if (api == 'private') {
-            let query = this.keysort (this.extend ({
-                'api_key': this.apiKey,
-            }, params));
-            // secret key must be at the end of query
-            let queryString = this.rawencode (query) + '&secret_key=' + this.secret;
-            query['sign'] = this.hash (this.encode (queryString)).toUpperCase ();
-            body = this.urlencode (query);
-            headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-        } else {
-            if (Object.keys (params).length)
-                url += '?' + this.urlencode (params);
-        }
-        url = this.urls['api'][api] + url;
-        return { 'url': url, 'method': method, 'body': body, 'headers': headers };
-    }
-
-    async request (path, api = 'public', method = 'GET', params = {}, headers = undefined, body = undefined) {
-        let response = await this.fetch2 (path, api, method, params, headers, body);
-        if ('result' in response)
-            if (!response['result'])
-                throw new ExchangeError (this.id + ' ' + this.json (response));
-        return response;
-    }
-}
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-if (undefined !== 'production') {
-  var invariant = __webpack_require__(16);
-  var warning = __webpack_require__(31);
-  var ReactPropTypesSecret = __webpack_require__(46);
-  var loggedTypeFailures = {};
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (undefined !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
-        }
-      }
-    }
-  }
-}
-
-module.exports = checkPropTypes;
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-
-/**
- * Simple, lightweight module assisting with the detection and context of
- * Worker. Helps avoid circular dependencies and allows code to reason about
- * whether or not they are in a Worker, even if they never include the main
- * `ReactWorker` dependency.
- */
-var ExecutionEnvironment = {
-
-  canUseDOM: canUseDOM,
-
-  canUseWorkers: typeof Worker !== 'undefined',
-
-  canUseEventListeners: canUseDOM && !!(window.addEventListener || window.attachEvent),
-
-  canUseViewport: canUseDOM && !!window.screen,
-
-  isInWorker: !canUseDOM // For now, this is true - might change in the future.
-
-};
-
-module.exports = ExecutionEnvironment;
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.locationsAreEqual = exports.createLocation = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _resolvePathname = __webpack_require__(72);
-
-var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
-
-var _valueEqual = __webpack_require__(73);
-
-var _valueEqual2 = _interopRequireDefault(_valueEqual);
-
-var _PathUtils = __webpack_require__(23);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var createLocation = exports.createLocation = function createLocation(path, state, key, currentLocation) {
-  var location = void 0;
-  if (typeof path === 'string') {
-    // Two-arg form: push(path, state)
-    location = (0, _PathUtils.parsePath)(path);
-    location.state = state;
-  } else {
-    // One-arg form: push(location)
-    location = _extends({}, path);
-
-    if (location.pathname === undefined) location.pathname = '';
-
-    if (location.search) {
-      if (location.search.charAt(0) !== '?') location.search = '?' + location.search;
-    } else {
-      location.search = '';
-    }
-
-    if (location.hash) {
-      if (location.hash.charAt(0) !== '#') location.hash = '#' + location.hash;
-    } else {
-      location.hash = '';
-    }
-
-    if (state !== undefined && location.state === undefined) location.state = state;
-  }
-
-  try {
-    location.pathname = decodeURI(location.pathname);
-  } catch (e) {
-    if (e instanceof URIError) {
-      throw new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is likely caused by an invalid percent-encoding.');
-    } else {
-      throw e;
-    }
-  }
-
-  if (key) location.key = key;
-
-  if (currentLocation) {
-    // Resolve incomplete/relative pathname relative to current location.
-    if (!location.pathname) {
-      location.pathname = currentLocation.pathname;
-    } else if (location.pathname.charAt(0) !== '/') {
-      location.pathname = (0, _resolvePathname2.default)(location.pathname, currentLocation.pathname);
-    }
-  } else {
-    // When there is no prior location and pathname is empty, set it to /
-    if (!location.pathname) {
-      location.pathname = '/';
-    }
-  }
-
-  return location;
-};
-
-var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
-  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
-};
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _warning = __webpack_require__(8);
-
-var _warning2 = _interopRequireDefault(_warning);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var createTransitionManager = function createTransitionManager() {
-  var prompt = null;
-
-  var setPrompt = function setPrompt(nextPrompt) {
-    (0, _warning2.default)(prompt == null, 'A history supports only one prompt at a time');
-
-    prompt = nextPrompt;
-
-    return function () {
-      if (prompt === nextPrompt) prompt = null;
-    };
-  };
-
-  var confirmTransitionTo = function confirmTransitionTo(location, action, getUserConfirmation, callback) {
-    // TODO: If another transition starts while we're still confirming
-    // the previous one, we may end up in a weird state. Figure out the
-    // best way to handle this.
-    if (prompt != null) {
-      var result = typeof prompt === 'function' ? prompt(location, action) : prompt;
-
-      if (typeof result === 'string') {
-        if (typeof getUserConfirmation === 'function') {
-          getUserConfirmation(result, callback);
-        } else {
-          (0, _warning2.default)(false, 'A history needs a getUserConfirmation function in order to use a prompt message');
-
-          callback(true);
-        }
-      } else {
-        // Return false from a transition hook to cancel the transition.
-        callback(result !== false);
-      }
-    } else {
-      callback(true);
-    }
-  };
-
-  var listeners = [];
-
-  var appendListener = function appendListener(fn) {
-    var isActive = true;
-
-    var listener = function listener() {
-      if (isActive) fn.apply(undefined, arguments);
-    };
-
-    listeners.push(listener);
-
-    return function () {
-      isActive = false;
-      listeners = listeners.filter(function (item) {
-        return item !== listener;
-      });
-    };
-  };
-
-  var notifyListeners = function notifyListeners() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    listeners.forEach(function (listener) {
-      return listener.apply(undefined, args);
-    });
-  };
-
-  return {
-    setPrompt: setPrompt,
-    confirmTransitionTo: confirmTransitionTo,
-    appendListener: appendListener,
-    notifyListeners: notifyListeners
-  };
-};
-
-exports.default = createTransitionManager;
-
-/***/ }),
-/* 50 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Router__ = __webpack_require__(51);
-// Written in this round about way for babel-transform-imports
-
-
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Router__["a" /* default */]);
-
-/***/ }),
-/* 51 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-/**
- * The public API for putting history on context.
- */
-
-var Router = function (_React$Component) {
-  _inherits(Router, _React$Component);
-
-  function Router() {
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, Router);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
-      match: _this.computeMatch(_this.props.history.location.pathname)
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  Router.prototype.getChildContext = function getChildContext() {
-    return {
-      router: _extends({}, this.context.router, {
-        history: this.props.history,
-        route: {
-          location: this.props.history.location,
-          match: this.state.match
-        }
-      })
-    };
-  };
-
-  Router.prototype.computeMatch = function computeMatch(pathname) {
-    return {
-      path: '/',
-      url: '/',
-      params: {},
-      isExact: pathname === '/'
-    };
-  };
-
-  Router.prototype.componentWillMount = function componentWillMount() {
-    var _this2 = this;
-
-    var _props = this.props,
-        children = _props.children,
-        history = _props.history;
-
-
-    __WEBPACK_IMPORTED_MODULE_1_invariant___default()(children == null || __WEBPACK_IMPORTED_MODULE_2_react___default.a.Children.count(children) === 1, 'A <Router> may have only one child element');
-
-    // Do this here so we can setState when a <Redirect> changes the
-    // location in componentWillMount. This happens e.g. when doing
-    // server rendering using a <StaticRouter>.
-    this.unlisten = history.listen(function () {
-      _this2.setState({
-        match: _this2.computeMatch(history.location.pathname)
-      });
-    });
-  };
-
-  Router.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-    __WEBPACK_IMPORTED_MODULE_0_warning___default()(this.props.history === nextProps.history, 'You cannot change <Router history>');
-  };
-
-  Router.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.unlisten();
-  };
-
-  Router.prototype.render = function render() {
-    var children = this.props.children;
-
-    return children ? __WEBPACK_IMPORTED_MODULE_2_react___default.a.Children.only(children) : null;
-  };
-
-  return Router;
-}(__WEBPACK_IMPORTED_MODULE_2_react___default.a.Component);
-
-Router.propTypes = {
-  history: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.object.isRequired,
-  children: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.node
-};
-Router.contextTypes = {
-  router: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.object
-};
-Router.childContextTypes = {
-  router: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.object.isRequired
-};
-
-
-/* harmony default export */ __webpack_exports__["a"] = (Router);
-
-/***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_path_to_regexp__);
-
-
-var patternCache = {};
-var cacheLimit = 10000;
-var cacheCount = 0;
-
-var compilePath = function compilePath(pattern, options) {
-  var cacheKey = '' + options.end + options.strict + options.sensitive;
-  var cache = patternCache[cacheKey] || (patternCache[cacheKey] = {});
-
-  if (cache[pattern]) return cache[pattern];
-
-  var keys = [];
-  var re = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default()(pattern, keys, options);
-  var compiledPattern = { re: re, keys: keys };
-
-  if (cacheCount < cacheLimit) {
-    cache[pattern] = compiledPattern;
-    cacheCount++;
-  }
-
-  return compiledPattern;
-};
-
-/**
- * Public API for matching a URL pathname to a path pattern.
- */
-var matchPath = function matchPath(pathname) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  if (typeof options === 'string') options = { path: options };
-
-  var _options = options,
-      _options$path = _options.path,
-      path = _options$path === undefined ? '/' : _options$path,
-      _options$exact = _options.exact,
-      exact = _options$exact === undefined ? false : _options$exact,
-      _options$strict = _options.strict,
-      strict = _options$strict === undefined ? false : _options$strict,
-      _options$sensitive = _options.sensitive,
-      sensitive = _options$sensitive === undefined ? false : _options$sensitive;
-
-  var _compilePath = compilePath(path, { end: exact, strict: strict, sensitive: sensitive }),
-      re = _compilePath.re,
-      keys = _compilePath.keys;
-
-  var match = re.exec(pathname);
-
-  if (!match) return null;
-
-  var url = match[0],
-      values = match.slice(1);
-
-  var isExact = pathname === url;
-
-  if (exact && !isExact) return null;
-
-  return {
-    path: path, // the path pattern used to match
-    url: path === '/' && url === '' ? '/' : url, // the matched portion of the URL
-    isExact: isExact, // whether or not we matched exactly
-    params: keys.reduce(function (memo, key, index) {
-      memo[key.name] = values[index];
-      return memo;
-    }, {})
-  };
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (matchPath);
-
-/***/ }),
-/* 53 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-
-
-var createTransitionManager = function createTransitionManager() {
-  var prompt = null;
-
-  var setPrompt = function setPrompt(nextPrompt) {
-    __WEBPACK_IMPORTED_MODULE_0_warning___default()(prompt == null, 'A history supports only one prompt at a time');
-
-    prompt = nextPrompt;
-
-    return function () {
-      if (prompt === nextPrompt) prompt = null;
-    };
-  };
-
-  var confirmTransitionTo = function confirmTransitionTo(location, action, getUserConfirmation, callback) {
-    // TODO: If another transition starts while we're still confirming
-    // the previous one, we may end up in a weird state. Figure out the
-    // best way to handle this.
-    if (prompt != null) {
-      var result = typeof prompt === 'function' ? prompt(location, action) : prompt;
-
-      if (typeof result === 'string') {
-        if (typeof getUserConfirmation === 'function') {
-          getUserConfirmation(result, callback);
-        } else {
-          __WEBPACK_IMPORTED_MODULE_0_warning___default()(false, 'A history needs a getUserConfirmation function in order to use a prompt message');
-
-          callback(true);
-        }
-      } else {
-        // Return false from a transition hook to cancel the transition.
-        callback(result !== false);
-      }
-    } else {
-      callback(true);
-    }
-  };
-
-  var listeners = [];
-
-  var appendListener = function appendListener(fn) {
-    var isActive = true;
-
-    var listener = function listener() {
-      if (isActive) fn.apply(undefined, arguments);
-    };
-
-    listeners.push(listener);
-
-    return function () {
-      isActive = false;
-      listeners = listeners.filter(function (item) {
-        return item !== listener;
-      });
-    };
-  };
-
-  var notifyListeners = function notifyListeners() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    listeners.forEach(function (listener) {
-      return listener.apply(undefined, args);
-    });
-  };
-
-  return {
-    setPrompt: setPrompt,
-    confirmTransitionTo: confirmTransitionTo,
-    appendListener: appendListener,
-    notifyListeners: notifyListeners
-  };
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (createTransitionManager);
-
-/***/ }),
-/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12138,6 +10143,2001 @@ var defaults = __WEBPACK_IMPORTED_MODULE_2_chart_js___default.a.defaults;
 
 
 /***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * @namespace Chart.helpers
+ */
+var helpers = {
+	/**
+	 * An empty function that can be used, for example, for optional callback.
+	 */
+	noop: function() {},
+
+	/**
+	 * Returns a unique id, sequentially generated from a global variable.
+	 * @returns {Number}
+	 * @function
+	 */
+	uid: (function() {
+		var id = 0;
+		return function() {
+			return id++;
+		};
+	}()),
+
+	/**
+	 * Returns true if `value` is neither null nor undefined, else returns false.
+	 * @param {*} value - The value to test.
+	 * @returns {Boolean}
+	 * @since 2.7.0
+	 */
+	isNullOrUndef: function(value) {
+		return value === null || typeof value === 'undefined';
+	},
+
+	/**
+	 * Returns true if `value` is an array, else returns false.
+	 * @param {*} value - The value to test.
+	 * @returns {Boolean}
+	 * @function
+	 */
+	isArray: Array.isArray ? Array.isArray : function(value) {
+		return Object.prototype.toString.call(value) === '[object Array]';
+	},
+
+	/**
+	 * Returns true if `value` is an object (excluding null), else returns false.
+	 * @param {*} value - The value to test.
+	 * @returns {Boolean}
+	 * @since 2.7.0
+	 */
+	isObject: function(value) {
+		return value !== null && Object.prototype.toString.call(value) === '[object Object]';
+	},
+
+	/**
+	 * Returns `value` if defined, else returns `defaultValue`.
+	 * @param {*} value - The value to return if defined.
+	 * @param {*} defaultValue - The value to return if `value` is undefined.
+	 * @returns {*}
+	 */
+	valueOrDefault: function(value, defaultValue) {
+		return typeof value === 'undefined' ? defaultValue : value;
+	},
+
+	/**
+	 * Returns value at the given `index` in array if defined, else returns `defaultValue`.
+	 * @param {Array} value - The array to lookup for value at `index`.
+	 * @param {Number} index - The index in `value` to lookup for value.
+	 * @param {*} defaultValue - The value to return if `value[index]` is undefined.
+	 * @returns {*}
+	 */
+	valueAtIndexOrDefault: function(value, index, defaultValue) {
+		return helpers.valueOrDefault(helpers.isArray(value) ? value[index] : value, defaultValue);
+	},
+
+	/**
+	 * Calls `fn` with the given `args` in the scope defined by `thisArg` and returns the
+	 * value returned by `fn`. If `fn` is not a function, this method returns undefined.
+	 * @param {Function} fn - The function to call.
+	 * @param {Array|undefined|null} args - The arguments with which `fn` should be called.
+	 * @param {Object} [thisArg] - The value of `this` provided for the call to `fn`.
+	 * @returns {*}
+	 */
+	callback: function(fn, args, thisArg) {
+		if (fn && typeof fn.call === 'function') {
+			return fn.apply(thisArg, args);
+		}
+	},
+
+	/**
+	 * Note(SB) for performance sake, this method should only be used when loopable type
+	 * is unknown or in none intensive code (not called often and small loopable). Else
+	 * it's preferable to use a regular for() loop and save extra function calls.
+	 * @param {Object|Array} loopable - The object or array to be iterated.
+	 * @param {Function} fn - The function to call for each item.
+	 * @param {Object} [thisArg] - The value of `this` provided for the call to `fn`.
+	 * @param {Boolean} [reverse] - If true, iterates backward on the loopable.
+	 */
+	each: function(loopable, fn, thisArg, reverse) {
+		var i, len, keys;
+		if (helpers.isArray(loopable)) {
+			len = loopable.length;
+			if (reverse) {
+				for (i = len - 1; i >= 0; i--) {
+					fn.call(thisArg, loopable[i], i);
+				}
+			} else {
+				for (i = 0; i < len; i++) {
+					fn.call(thisArg, loopable[i], i);
+				}
+			}
+		} else if (helpers.isObject(loopable)) {
+			keys = Object.keys(loopable);
+			len = keys.length;
+			for (i = 0; i < len; i++) {
+				fn.call(thisArg, loopable[keys[i]], keys[i]);
+			}
+		}
+	},
+
+	/**
+	 * Returns true if the `a0` and `a1` arrays have the same content, else returns false.
+	 * @see http://stackoverflow.com/a/14853974
+	 * @param {Array} a0 - The array to compare
+	 * @param {Array} a1 - The array to compare
+	 * @returns {Boolean}
+	 */
+	arrayEquals: function(a0, a1) {
+		var i, ilen, v0, v1;
+
+		if (!a0 || !a1 || a0.length !== a1.length) {
+			return false;
+		}
+
+		for (i = 0, ilen = a0.length; i < ilen; ++i) {
+			v0 = a0[i];
+			v1 = a1[i];
+
+			if (v0 instanceof Array && v1 instanceof Array) {
+				if (!helpers.arrayEquals(v0, v1)) {
+					return false;
+				}
+			} else if (v0 !== v1) {
+				// NOTE: two different object instances will never be equal: {x:20} != {x:20}
+				return false;
+			}
+		}
+
+		return true;
+	},
+
+	/**
+	 * Returns a deep copy of `source` without keeping references on objects and arrays.
+	 * @param {*} source - The value to clone.
+	 * @returns {*}
+	 */
+	clone: function(source) {
+		if (helpers.isArray(source)) {
+			return source.map(helpers.clone);
+		}
+
+		if (helpers.isObject(source)) {
+			var target = {};
+			var keys = Object.keys(source);
+			var klen = keys.length;
+			var k = 0;
+
+			for (; k < klen; ++k) {
+				target[keys[k]] = helpers.clone(source[keys[k]]);
+			}
+
+			return target;
+		}
+
+		return source;
+	},
+
+	/**
+	 * The default merger when Chart.helpers.merge is called without merger option.
+	 * Note(SB): this method is also used by configMerge and scaleMerge as fallback.
+	 * @private
+	 */
+	_merger: function(key, target, source, options) {
+		var tval = target[key];
+		var sval = source[key];
+
+		if (helpers.isObject(tval) && helpers.isObject(sval)) {
+			helpers.merge(tval, sval, options);
+		} else {
+			target[key] = helpers.clone(sval);
+		}
+	},
+
+	/**
+	 * Merges source[key] in target[key] only if target[key] is undefined.
+	 * @private
+	 */
+	_mergerIf: function(key, target, source) {
+		var tval = target[key];
+		var sval = source[key];
+
+		if (helpers.isObject(tval) && helpers.isObject(sval)) {
+			helpers.mergeIf(tval, sval);
+		} else if (!target.hasOwnProperty(key)) {
+			target[key] = helpers.clone(sval);
+		}
+	},
+
+	/**
+	 * Recursively deep copies `source` properties into `target` with the given `options`.
+	 * IMPORTANT: `target` is not cloned and will be updated with `source` properties.
+	 * @param {Object} target - The target object in which all sources are merged into.
+	 * @param {Object|Array(Object)} source - Object(s) to merge into `target`.
+	 * @param {Object} [options] - Merging options:
+	 * @param {Function} [options.merger] - The merge method (key, target, source, options)
+	 * @returns {Object} The `target` object.
+	 */
+	merge: function(target, source, options) {
+		var sources = helpers.isArray(source) ? source : [source];
+		var ilen = sources.length;
+		var merge, i, keys, klen, k;
+
+		if (!helpers.isObject(target)) {
+			return target;
+		}
+
+		options = options || {};
+		merge = options.merger || helpers._merger;
+
+		for (i = 0; i < ilen; ++i) {
+			source = sources[i];
+			if (!helpers.isObject(source)) {
+				continue;
+			}
+
+			keys = Object.keys(source);
+			for (k = 0, klen = keys.length; k < klen; ++k) {
+				merge(keys[k], target, source, options);
+			}
+		}
+
+		return target;
+	},
+
+	/**
+	 * Recursively deep copies `source` properties into `target` *only* if not defined in target.
+	 * IMPORTANT: `target` is not cloned and will be updated with `source` properties.
+	 * @param {Object} target - The target object in which all sources are merged into.
+	 * @param {Object|Array(Object)} source - Object(s) to merge into `target`.
+	 * @returns {Object} The `target` object.
+	 */
+	mergeIf: function(target, source) {
+		return helpers.merge(target, source, {merger: helpers._mergerIf});
+	},
+
+	/**
+	 * Applies the contents of two or more objects together into the first object.
+	 * @param {Object} target - The target object in which all objects are merged into.
+	 * @param {Object} arg1 - Object containing additional properties to merge in target.
+	 * @param {Object} argN - Additional objects containing properties to merge in target.
+	 * @returns {Object} The `target` object.
+	 */
+	extend: function(target) {
+		var setFn = function(value, key) {
+			target[key] = value;
+		};
+		for (var i = 1, ilen = arguments.length; i < ilen; ++i) {
+			helpers.each(arguments[i], setFn);
+		}
+		return target;
+	},
+
+	/**
+	 * Basic javascript inheritance based on the model created in Backbone.js
+	 */
+	inherits: function(extensions) {
+		var me = this;
+		var ChartElement = (extensions && extensions.hasOwnProperty('constructor')) ? extensions.constructor : function() {
+			return me.apply(this, arguments);
+		};
+
+		var Surrogate = function() {
+			this.constructor = ChartElement;
+		};
+
+		Surrogate.prototype = me.prototype;
+		ChartElement.prototype = new Surrogate();
+		ChartElement.extend = helpers.inherits;
+
+		if (extensions) {
+			helpers.extend(ChartElement.prototype, extensions);
+		}
+
+		ChartElement.__super__ = me.prototype;
+		return ChartElement;
+	}
+};
+
+module.exports = helpers;
+
+// DEPRECATIONS
+
+/**
+ * Provided for backward compatibility, use Chart.helpers.callback instead.
+ * @function Chart.helpers.callCallback
+ * @deprecated since version 2.6.0
+ * @todo remove at version 3
+ * @private
+ */
+helpers.callCallback = helpers.callback;
+
+/**
+ * Provided for backward compatibility, use Array.prototype.indexOf instead.
+ * Array.prototype.indexOf compatibility: Chrome, Opera, Safari, FF1.5+, IE9+
+ * @function Chart.helpers.indexOf
+ * @deprecated since version 2.7.0
+ * @todo remove at version 3
+ * @private
+ */
+helpers.indexOf = function(array, item, fromIndex) {
+	return Array.prototype.indexOf.call(array, item, fromIndex);
+};
+
+/**
+ * Provided for backward compatibility, use Chart.helpers.valueOrDefault instead.
+ * @function Chart.helpers.getValueOrDefault
+ * @deprecated since version 2.7.0
+ * @todo remove at version 3
+ * @private
+ */
+helpers.getValueOrDefault = helpers.valueOrDefault;
+
+/**
+ * Provided for backward compatibility, use Chart.helpers.valueAtIndexOrDefault instead.
+ * @function Chart.helpers.getValueAtIndexOrDefault
+ * @deprecated since version 2.7.0
+ * @todo remove at version 3
+ * @private
+ */
+helpers.getValueAtIndexOrDefault = helpers.valueAtIndexOrDefault;
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var listCacheClear = __webpack_require__(326),
+    listCacheDelete = __webpack_require__(327),
+    listCacheGet = __webpack_require__(328),
+    listCacheHas = __webpack_require__(329),
+    listCacheSet = __webpack_require__(330);
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+module.exports = ListCache;
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var eq = __webpack_require__(198);
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+module.exports = assocIndexOf;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(12);
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(18);
+
+/* Built-in method references that are verified to be native. */
+var nativeCreate = getNative(Object, 'create');
+
+module.exports = nativeCreate;
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isKeyable = __webpack_require__(350);
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+module.exports = getMapData;
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(26),
+    isObjectLike = __webpack_require__(27);
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && baseGetTag(value) == symbolTag);
+}
+
+module.exports = isSymbol;
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isSymbol = __webpack_require__(42);
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/**
+ * Converts `value` to a string key if it's not a string or symbol.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {string|symbol} Returns the key.
+ */
+function toKey(value) {
+  if (typeof value == 'string' || isSymbol(value)) {
+    return value;
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+module.exports = toKey;
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(4));
+	}
+	else if (typeof define === "function" && define.amd) {
+		// AMD
+		define(["./core"], factory);
+	}
+	else {
+		// Global (browser)
+		factory(root.CryptoJS);
+	}
+}(this, function (CryptoJS) {
+
+	(function (undefined) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var X32WordArray = C_lib.WordArray;
+
+	    /**
+	     * x64 namespace.
+	     */
+	    var C_x64 = C.x64 = {};
+
+	    /**
+	     * A 64-bit word.
+	     */
+	    var X64Word = C_x64.Word = Base.extend({
+	        /**
+	         * Initializes a newly created 64-bit word.
+	         *
+	         * @param {number} high The high 32 bits.
+	         * @param {number} low The low 32 bits.
+	         *
+	         * @example
+	         *
+	         *     var x64Word = CryptoJS.x64.Word.create(0x00010203, 0x04050607);
+	         */
+	        init: function (high, low) {
+	            this.high = high;
+	            this.low = low;
+	        }
+
+	        /**
+	         * Bitwise NOTs this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after negating.
+	         *
+	         * @example
+	         *
+	         *     var negated = x64Word.not();
+	         */
+	        // not: function () {
+	            // var high = ~this.high;
+	            // var low = ~this.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise ANDs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to AND with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after ANDing.
+	         *
+	         * @example
+	         *
+	         *     var anded = x64Word.and(anotherX64Word);
+	         */
+	        // and: function (word) {
+	            // var high = this.high & word.high;
+	            // var low = this.low & word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise ORs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to OR with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after ORing.
+	         *
+	         * @example
+	         *
+	         *     var ored = x64Word.or(anotherX64Word);
+	         */
+	        // or: function (word) {
+	            // var high = this.high | word.high;
+	            // var low = this.low | word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise XORs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to XOR with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after XORing.
+	         *
+	         * @example
+	         *
+	         *     var xored = x64Word.xor(anotherX64Word);
+	         */
+	        // xor: function (word) {
+	            // var high = this.high ^ word.high;
+	            // var low = this.low ^ word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Shifts this word n bits to the left.
+	         *
+	         * @param {number} n The number of bits to shift.
+	         *
+	         * @return {X64Word} A new x64-Word object after shifting.
+	         *
+	         * @example
+	         *
+	         *     var shifted = x64Word.shiftL(25);
+	         */
+	        // shiftL: function (n) {
+	            // if (n < 32) {
+	                // var high = (this.high << n) | (this.low >>> (32 - n));
+	                // var low = this.low << n;
+	            // } else {
+	                // var high = this.low << (n - 32);
+	                // var low = 0;
+	            // }
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Shifts this word n bits to the right.
+	         *
+	         * @param {number} n The number of bits to shift.
+	         *
+	         * @return {X64Word} A new x64-Word object after shifting.
+	         *
+	         * @example
+	         *
+	         *     var shifted = x64Word.shiftR(7);
+	         */
+	        // shiftR: function (n) {
+	            // if (n < 32) {
+	                // var low = (this.low >>> n) | (this.high << (32 - n));
+	                // var high = this.high >>> n;
+	            // } else {
+	                // var low = this.high >>> (n - 32);
+	                // var high = 0;
+	            // }
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Rotates this word n bits to the left.
+	         *
+	         * @param {number} n The number of bits to rotate.
+	         *
+	         * @return {X64Word} A new x64-Word object after rotating.
+	         *
+	         * @example
+	         *
+	         *     var rotated = x64Word.rotL(25);
+	         */
+	        // rotL: function (n) {
+	            // return this.shiftL(n).or(this.shiftR(64 - n));
+	        // },
+
+	        /**
+	         * Rotates this word n bits to the right.
+	         *
+	         * @param {number} n The number of bits to rotate.
+	         *
+	         * @return {X64Word} A new x64-Word object after rotating.
+	         *
+	         * @example
+	         *
+	         *     var rotated = x64Word.rotR(7);
+	         */
+	        // rotR: function (n) {
+	            // return this.shiftR(n).or(this.shiftL(64 - n));
+	        // },
+
+	        /**
+	         * Adds this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to add with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after adding.
+	         *
+	         * @example
+	         *
+	         *     var added = x64Word.add(anotherX64Word);
+	         */
+	        // add: function (word) {
+	            // var low = (this.low + word.low) | 0;
+	            // var carry = (low >>> 0) < (this.low >>> 0) ? 1 : 0;
+	            // var high = (this.high + word.high + carry) | 0;
+
+	            // return X64Word.create(high, low);
+	        // }
+	    });
+
+	    /**
+	     * An array of 64-bit words.
+	     *
+	     * @property {Array} words The array of CryptoJS.x64.Word objects.
+	     * @property {number} sigBytes The number of significant bytes in this word array.
+	     */
+	    var X64WordArray = C_x64.WordArray = Base.extend({
+	        /**
+	         * Initializes a newly created word array.
+	         *
+	         * @param {Array} words (Optional) An array of CryptoJS.x64.Word objects.
+	         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create();
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create([
+	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *     ]);
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create([
+	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *     ], 10);
+	         */
+	        init: function (words, sigBytes) {
+	            words = this.words = words || [];
+
+	            if (sigBytes != undefined) {
+	                this.sigBytes = sigBytes;
+	            } else {
+	                this.sigBytes = words.length * 8;
+	            }
+	        },
+
+	        /**
+	         * Converts this 64-bit word array to a 32-bit word array.
+	         *
+	         * @return {CryptoJS.lib.WordArray} This word array's data as a 32-bit word array.
+	         *
+	         * @example
+	         *
+	         *     var x32WordArray = x64WordArray.toX32();
+	         */
+	        toX32: function () {
+	            // Shortcuts
+	            var x64Words = this.words;
+	            var x64WordsLength = x64Words.length;
+
+	            // Convert
+	            var x32Words = [];
+	            for (var i = 0; i < x64WordsLength; i++) {
+	                var x64Word = x64Words[i];
+	                x32Words.push(x64Word.high);
+	                x32Words.push(x64Word.low);
+	            }
+
+	            return X32WordArray.create(x32Words, this.sigBytes);
+	        },
+
+	        /**
+	         * Creates a copy of this word array.
+	         *
+	         * @return {X64WordArray} The clone.
+	         *
+	         * @example
+	         *
+	         *     var clone = x64WordArray.clone();
+	         */
+	        clone: function () {
+	            var clone = Base.clone.call(this);
+
+	            // Clone "words" array
+	            var words = clone.words = this.words.slice(0);
+
+	            // Clone each X64Word object
+	            var wordsLength = words.length;
+	            for (var i = 0; i < wordsLength; i++) {
+	                words[i] = words[i].clone();
+	            }
+
+	            return clone;
+	        }
+	    });
+	}());
+
+
+	return CryptoJS;
+
+}));
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//  ---------------------------------------------------------------------------
+
+const Exchange = __webpack_require__ (2)
+const { ExchangeError, InsufficientFunds, OrderNotFound, DDoSProtection } = __webpack_require__ (1)
+
+//  ---------------------------------------------------------------------------
+
+module.exports = class okcoinusd extends Exchange {
+
+    describe () {
+        return this.deepExtend (super.describe (), {
+            'id': 'okcoinusd',
+            'name': 'OKCoin USD',
+            'countries': [ 'CN', 'US' ],
+            'hasCORS': false,
+            'version': 'v1',
+            'rateLimit': 1000, // up to 3000 requests per 5 minutes ≈ 600 requests per minute ≈ 10 requests per second ≈ 100 ms
+            'hasFetchOHLCV': true,
+            'hasFetchOrder': true,
+            'hasFetchOrders': true,
+            'hasFetchOpenOrders': true,
+            'hasFetchClosedOrders': true,
+            'extension': '.do', // appended to endpoint URL
+            'timeframes': {
+                '1m': '1min',
+                '3m': '3min',
+                '5m': '5min',
+                '15m': '15min',
+                '30m': '30min',
+                '1h': '1hour',
+                '2h': '2hour',
+                '4h': '4hour',
+                '6h': '6hour',
+                '12h': '12hour',
+                '1d': '1day',
+                '3d': '3day',
+                '1w': '1week',
+            },
+            'api': {
+                'public': {
+                    'get': [
+                        'depth',
+                        'exchange_rate',
+                        'future_depth',
+                        'future_estimated_price',
+                        'future_hold_amount',
+                        'future_index',
+                        'future_kline',
+                        'future_price_limit',
+                        'future_ticker',
+                        'future_trades',
+                        'kline',
+                        'otcs',
+                        'ticker',
+                        'trades',
+                    ],
+                },
+                'private': {
+                    'post': [
+                        'account_records',
+                        'batch_trade',
+                        'borrow_money',
+                        'borrow_order_info',
+                        'borrows_info',
+                        'cancel_borrow',
+                        'cancel_order',
+                        'cancel_otc_order',
+                        'cancel_withdraw',
+                        'future_batch_trade',
+                        'future_cancel',
+                        'future_devolve',
+                        'future_explosive',
+                        'future_order_info',
+                        'future_orders_info',
+                        'future_position',
+                        'future_position_4fix',
+                        'future_trade',
+                        'future_trades_history',
+                        'future_userinfo',
+                        'future_userinfo_4fix',
+                        'lend_depth',
+                        'order_fee',
+                        'order_history',
+                        'order_info',
+                        'orders_info',
+                        'otc_order_history',
+                        'otc_order_info',
+                        'repayment',
+                        'submit_otc_order',
+                        'trade',
+                        'trade_history',
+                        'trade_otc_order',
+                        'withdraw',
+                        'withdraw_info',
+                        'unrepayments_info',
+                        'userinfo',
+                    ],
+                },
+            },
+            'urls': {
+                'logo': 'https://user-images.githubusercontent.com/1294454/27766791-89ffb502-5ee5-11e7-8a5b-c5950b68ac65.jpg',
+                'api': {
+                    'web': 'https://www.okcoin.com',
+                    'public': 'https://www.okcoin.com/api',
+                    'private': 'https://www.okcoin.com/api',
+                },
+                'www': 'https://www.okcoin.com',
+                'doc': [
+                    'https://www.okcoin.com/rest_getStarted.html',
+                    'https://www.npmjs.com/package/okcoin.com',
+                ],
+            },
+            'markets': {
+                'BTC/USD': { 'id': 'btc_usd', 'symbol': 'BTC/USD', 'base': 'BTC', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
+                'LTC/USD': { 'id': 'ltc_usd', 'symbol': 'LTC/USD', 'base': 'LTC', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
+                'ETH/USD': { 'id': 'eth_usd', 'symbol': 'ETH/USD', 'base': 'ETH', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
+                'ETC/USD': { 'id': 'etc_usd', 'symbol': 'ETC/USD', 'base': 'ETC', 'quote': 'USD', 'type': 'spot', 'spot': true, 'future': false },
+            },
+        });
+    }
+
+    async fetchOrderBook (symbol, params = {}) {
+        await this.loadMarkets ();
+        let market = this.market (symbol);
+        let method = 'publicGet';
+        let request = {
+            'symbol': market['id'],
+        };
+        if (market['future']) {
+            method += 'Future';
+            request['contract_type'] = 'this_week'; // next_week, quarter
+        }
+        method += 'Depth';
+        let orderbook = await this[method] (this.extend (request, params));
+        let timestamp = this.milliseconds ();
+        return {
+            'bids': orderbook['bids'],
+            'asks': this.sortBy (orderbook['asks'], 0),
+            'timestamp': timestamp,
+            'datetime': this.iso8601 (timestamp),
+        };
+    }
+
+    parseTicker (ticker, market = undefined) {
+        let timestamp = ticker['timestamp'];
+        let symbol = undefined;
+        if (market)
+            symbol = market['symbol'];
+        return {
+            'symbol': symbol,
+            'timestamp': timestamp,
+            'datetime': this.iso8601 (timestamp),
+            'high': parseFloat (ticker['high']),
+            'low': parseFloat (ticker['low']),
+            'bid': parseFloat (ticker['buy']),
+            'ask': parseFloat (ticker['sell']),
+            'vwap': undefined,
+            'open': undefined,
+            'close': undefined,
+            'first': undefined,
+            'last': parseFloat (ticker['last']),
+            'change': undefined,
+            'percentage': undefined,
+            'average': undefined,
+            'baseVolume': undefined,
+            'quoteVolume': parseFloat (ticker['vol']),
+            'info': ticker,
+        };
+    }
+
+    async fetchTicker (symbol, params = {}) {
+        await this.loadMarkets ();
+        let market = this.market (symbol);
+        let method = 'publicGet';
+        let request = {
+            'symbol': market['id'],
+        };
+        if (market['future']) {
+            method += 'Future';
+            request['contract_type'] = 'this_week'; // next_week, quarter
+        }
+        method += 'Ticker';
+        let response = await this[method] (this.extend (request, params));
+        let timestamp = parseInt (response['date']) * 1000;
+        let ticker = this.extend (response['ticker'], { 'timestamp': timestamp });
+        return this.parseTicker (ticker, market);
+    }
+
+    parseTrade (trade, market = undefined) {
+        let symbol = undefined;
+        if (market)
+            symbol = market['symbol'];
+        return {
+            'info': trade,
+            'timestamp': trade['date_ms'],
+            'datetime': this.iso8601 (trade['date_ms']),
+            'symbol': symbol,
+            'id': trade['tid'].toString (),
+            'order': undefined,
+            'type': undefined,
+            'side': trade['type'],
+            'price': parseFloat (trade['price']),
+            'amount': parseFloat (trade['amount']),
+        };
+    }
+
+    async fetchTrades (symbol, params = {}) {
+        await this.loadMarkets ();
+        let market = this.market (symbol);
+        let method = 'publicGet';
+        let request = {
+            'symbol': market['id'],
+        };
+        if (market['future']) {
+            method += 'Future';
+            request['contract_type'] = 'this_week'; // next_week, quarter
+        }
+        method += 'Trades';
+        let response = await this[method] (this.extend (request, params));
+        return this.parseTrades (response, market);
+    }
+
+    async fetchOHLCV (symbol, timeframe = '1m', since = undefined, limit = 1440, params = {}) {
+        await this.loadMarkets ();
+        let market = this.market (symbol);
+        let method = 'publicGet';
+        let request = {
+            'symbol': market['id'],
+            'type': this.timeframes[timeframe],
+        };
+        if (market['future']) {
+            method += 'Future';
+            request['contract_type'] = 'this_week'; // next_week, quarter
+        }
+        method += 'Kline';
+        if (limit)
+            request['size'] = parseInt (limit);
+        if (since) {
+            request['since'] = since;
+        } else {
+            request['since'] = this.milliseconds () - 86400000; // last 24 hours
+        }
+        let response = await this[method] (this.extend (request, params));
+        return this.parseOHLCVs (response, market, timeframe, since, limit);
+    }
+
+    async fetchBalance (params = {}) {
+        await this.loadMarkets ();
+        let response = await this.privatePostUserinfo ();
+        let balances = response['info']['funds'];
+        let result = { 'info': response };
+        for (let c = 0; c < this.currencies.length; c++) {
+            let currency = this.currencies[c];
+            let lowercase = currency.toLowerCase ();
+            let account = this.account ();
+            account['free'] = this.safeFloat (balances['free'], lowercase, 0.0);
+            account['used'] = this.safeFloat (balances['freezed'], lowercase, 0.0);
+            account['total'] = this.sum (account['free'], account['used']);
+            result[currency] = account;
+        }
+        return this.parseBalance (result);
+    }
+
+    async createOrder (symbol, type, side, amount, price = undefined, params = {}) {
+        await this.loadMarkets ();
+        let market = this.market (symbol);
+        let method = 'privatePost';
+        let order = {
+            'symbol': market['id'],
+            'type': side,
+        };
+        if (market['future']) {
+            method += 'Future';
+            order = this.extend (order, {
+                'contract_type': 'this_week', // next_week, quarter
+                'match_price': 0, // match best counter party price? 0 or 1, ignores price if 1
+                'lever_rate': 10, // leverage rate value: 10 or 20 (10 by default)
+                'price': price,
+                'amount': amount,
+            });
+        } else {
+            if (type == 'limit') {
+                order['price'] = price;
+                order['amount'] = amount;
+            } else {
+                order['type'] += '_market';
+                if (side == 'buy') {
+                    order['price'] = this.safeFloat (params, 'cost');
+                    if (!order['price'])
+                        throw new ExchangeError (this.id + ' market buy orders require an additional cost parameter, cost = price * amount');
+                } else {
+                    order['amount'] = amount;
+                }
+            }
+        }
+        params = this.omit (params, 'cost');
+        method += 'Trade';
+        let response = await this[method] (this.extend (order, params));
+        return {
+            'info': response,
+            'id': response['order_id'].toString (),
+        };
+    }
+
+    async cancelOrder (id, symbol = undefined, params = {}) {
+        if (!symbol)
+            throw new ExchangeError (this.id + ' cancelOrder() requires a symbol argument');
+        let market = this.market (symbol);
+        let request = {
+            'symbol': market['id'],
+            'order_id': id,
+        };
+        let method = 'privatePost';
+        if (market['future']) {
+            method += 'FutureCancel';
+            request['contract_type'] = 'this_week'; // next_week, quarter
+        } else {
+            method += 'CancelOrder';
+        }
+        let response = await this[method] (this.extend (request, params));
+        return response;
+    }
+
+    parseOrderStatus (status) {
+        if (status == -1)
+            return 'canceled';
+        if (status == 0)
+            return 'open';
+        if (status == 1)
+            return 'partial';
+        if (status == 2)
+            return 'closed';
+        if (status == 4)
+            return 'canceled';
+        return status;
+    }
+
+    parseOrder (order, market = undefined) {
+        let side = undefined;
+        let type = undefined;
+        if ('type' in order) {
+            if ((order['type'] == 'buy') || (order['type'] == 'sell')) {
+                side = order['type'];
+                type = 'limit';
+            } else {
+                side = (order['type'] == 'buy_market') ? 'buy' : 'sell';
+                type = 'market';
+            }
+        }
+        let status = this.parseOrderStatus (order['status']);
+        let symbol = undefined;
+        if (!market) {
+            if ('symbol' in order)
+                if (order['symbol'] in this.markets_by_id)
+                    market = this.markets_by_id[order['symbol']];
+        }
+        if (market)
+            symbol = market['symbol'];
+        let timestamp = undefined;
+        if ('create_date' in order)
+            timestamp = order['create_date'];
+        let amount = order['amount'];
+        let filled = order['deal_amount'];
+        let remaining = amount - filled;
+        let average = order['avg_price'];
+        let cost = average * filled;
+        let result = {
+            'info': order,
+            'id': order['order_id'],
+            'timestamp': timestamp,
+            'datetime': this.iso8601 (timestamp),
+            'symbol': symbol,
+            'type': type,
+            'side': side,
+            'price': order['price'],
+            'average': average,
+            'cost': cost,
+            'amount': amount,
+            'filled': filled,
+            'remaining': remaining,
+            'status': status,
+            'fee': undefined,
+        };
+        return result;
+    }
+
+    async fetchOrder (id, symbol = undefined, params = {}) {
+        if (!symbol)
+            throw new ExchangeError (this.id + 'fetchOrders requires a symbol parameter');
+        await this.loadMarkets ();
+        let market = this.market (symbol);
+        let method = 'privatePost';
+        let request = {
+            'order_id': id,
+            'symbol': market['id'],
+            // 'status': 0, // 0 for unfilled orders, 1 for filled orders
+            // 'current_page': 1, // current page number
+            // 'page_length': 200, // number of orders returned per page, maximum 200
+        };
+        if (market['future']) {
+            method += 'Future';
+            request['contract_type'] = 'this_week'; // next_week, quarter
+        }
+        method += 'OrderInfo';
+        let response = await this[method] (this.extend (request, params));
+        return this.parseOrder (response['orders'][0]);
+    }
+
+    async fetchOrders (symbol = undefined, params = {}) {
+        if (!symbol)
+            throw new ExchangeError (this.id + 'fetchOrders requires a symbol parameter');
+        await this.loadMarkets ();
+        let market = this.market (symbol);
+        let method = 'privatePost';
+        let request = {
+            'symbol': market['id'],
+        };
+        let order_id_in_params = ('order_id' in params);
+        if (market['future']) {
+            method += 'FutureOrdersInfo';
+            request['contract_type'] = 'this_week'; // next_week, quarter
+            if (!order_id_in_params)
+                throw new ExchangeError (this.id + ' fetchOrders() requires order_id param for futures market ' + symbol + ' (a string of one or more order ids, comma-separated)');
+        } else {
+            let type = this.safeValue (params, 'type');
+            let status = this.safeValue (params, 'status');
+            if (type) {
+                status = params['type'];
+            } else if (status) {
+                status = params['status'];
+            } else {
+                throw new ExchangeError (this.id + ' fetchOrders() requires type param or status param for spot market ' + symbol + ' (0 or "open" for unfilled orders, 1 or "closed" for filled orders)');
+            }
+            if (status == 'open')
+                status = 0;
+            if (status == 'closed')
+                status = 1;
+            if (order_id_in_params) {
+                method += 'OrdersInfo';
+                request = this.extend (request, {
+                    'type': status,
+                });
+            } else {
+                method += 'OrderHistory';
+                request = this.extend (request, {
+                    'status': status,
+                    'current_page': 1, // current page number
+                    'page_length': 200, // number of orders returned per page, maximum 200
+                });
+            }
+            params = this.omit (params, [ 'type', 'status' ]);
+        }
+        let response = await this[method] (this.extend (request, params));
+        return this.parseOrders (response['orders'], market);
+    }
+
+    async fetchOpenOrders (symbol = undefined, params = {}) {
+        let open = 0; // 0 for unfilled orders, 1 for filled orders
+        return await this.fetchOrders (symbol, this.extend ({
+            'status': open,
+        }, params));
+    }
+
+    async fetchClosedOrders (symbol = undefined, params = {}) {
+        let closed = 1; // 0 for unfilled orders, 1 for filled orders
+        return await this.fetchOrders (symbol, this.extend ({
+            'status': closed,
+        }, params));
+    }
+
+    sign (path, api = 'public', method = 'GET', params = {}, headers = undefined, body = undefined) {
+        let url = '/';
+        if (api != 'web')
+            url += this.version + '/';
+        url += path + this.extension;
+        if (api == 'private') {
+            let query = this.keysort (this.extend ({
+                'api_key': this.apiKey,
+            }, params));
+            // secret key must be at the end of query
+            let queryString = this.rawencode (query) + '&secret_key=' + this.secret;
+            query['sign'] = this.hash (this.encode (queryString)).toUpperCase ();
+            body = this.urlencode (query);
+            headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+        } else {
+            if (Object.keys (params).length)
+                url += '?' + this.urlencode (params);
+        }
+        url = this.urls['api'][api] + url;
+        return { 'url': url, 'method': method, 'body': body, 'headers': headers };
+    }
+
+    async request (path, api = 'public', method = 'GET', params = {}, headers = undefined, body = undefined) {
+        let response = await this.fetch2 (path, api, method, params, headers, body);
+        if ('result' in response)
+            if (!response['result'])
+                throw new ExchangeError (this.id + ' ' + this.json (response));
+        return response;
+    }
+}
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (undefined !== 'production') {
+  var invariant = __webpack_require__(16);
+  var warning = __webpack_require__(31);
+  var ReactPropTypesSecret = __webpack_require__(47);
+  var loggedTypeFailures = {};
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (undefined !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+/**
+ * Simple, lightweight module assisting with the detection and context of
+ * Worker. Helps avoid circular dependencies and allows code to reason about
+ * whether or not they are in a Worker, even if they never include the main
+ * `ReactWorker` dependency.
+ */
+var ExecutionEnvironment = {
+
+  canUseDOM: canUseDOM,
+
+  canUseWorkers: typeof Worker !== 'undefined',
+
+  canUseEventListeners: canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+  canUseViewport: canUseDOM && !!window.screen,
+
+  isInWorker: !canUseDOM // For now, this is true - might change in the future.
+
+};
+
+module.exports = ExecutionEnvironment;
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.locationsAreEqual = exports.createLocation = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _resolvePathname = __webpack_require__(72);
+
+var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
+
+var _valueEqual = __webpack_require__(73);
+
+var _valueEqual2 = _interopRequireDefault(_valueEqual);
+
+var _PathUtils = __webpack_require__(23);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var createLocation = exports.createLocation = function createLocation(path, state, key, currentLocation) {
+  var location = void 0;
+  if (typeof path === 'string') {
+    // Two-arg form: push(path, state)
+    location = (0, _PathUtils.parsePath)(path);
+    location.state = state;
+  } else {
+    // One-arg form: push(location)
+    location = _extends({}, path);
+
+    if (location.pathname === undefined) location.pathname = '';
+
+    if (location.search) {
+      if (location.search.charAt(0) !== '?') location.search = '?' + location.search;
+    } else {
+      location.search = '';
+    }
+
+    if (location.hash) {
+      if (location.hash.charAt(0) !== '#') location.hash = '#' + location.hash;
+    } else {
+      location.hash = '';
+    }
+
+    if (state !== undefined && location.state === undefined) location.state = state;
+  }
+
+  try {
+    location.pathname = decodeURI(location.pathname);
+  } catch (e) {
+    if (e instanceof URIError) {
+      throw new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is likely caused by an invalid percent-encoding.');
+    } else {
+      throw e;
+    }
+  }
+
+  if (key) location.key = key;
+
+  if (currentLocation) {
+    // Resolve incomplete/relative pathname relative to current location.
+    if (!location.pathname) {
+      location.pathname = currentLocation.pathname;
+    } else if (location.pathname.charAt(0) !== '/') {
+      location.pathname = (0, _resolvePathname2.default)(location.pathname, currentLocation.pathname);
+    }
+  } else {
+    // When there is no prior location and pathname is empty, set it to /
+    if (!location.pathname) {
+      location.pathname = '/';
+    }
+  }
+
+  return location;
+};
+
+var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
+  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
+};
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _warning = __webpack_require__(8);
+
+var _warning2 = _interopRequireDefault(_warning);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var createTransitionManager = function createTransitionManager() {
+  var prompt = null;
+
+  var setPrompt = function setPrompt(nextPrompt) {
+    (0, _warning2.default)(prompt == null, 'A history supports only one prompt at a time');
+
+    prompt = nextPrompt;
+
+    return function () {
+      if (prompt === nextPrompt) prompt = null;
+    };
+  };
+
+  var confirmTransitionTo = function confirmTransitionTo(location, action, getUserConfirmation, callback) {
+    // TODO: If another transition starts while we're still confirming
+    // the previous one, we may end up in a weird state. Figure out the
+    // best way to handle this.
+    if (prompt != null) {
+      var result = typeof prompt === 'function' ? prompt(location, action) : prompt;
+
+      if (typeof result === 'string') {
+        if (typeof getUserConfirmation === 'function') {
+          getUserConfirmation(result, callback);
+        } else {
+          (0, _warning2.default)(false, 'A history needs a getUserConfirmation function in order to use a prompt message');
+
+          callback(true);
+        }
+      } else {
+        // Return false from a transition hook to cancel the transition.
+        callback(result !== false);
+      }
+    } else {
+      callback(true);
+    }
+  };
+
+  var listeners = [];
+
+  var appendListener = function appendListener(fn) {
+    var isActive = true;
+
+    var listener = function listener() {
+      if (isActive) fn.apply(undefined, arguments);
+    };
+
+    listeners.push(listener);
+
+    return function () {
+      isActive = false;
+      listeners = listeners.filter(function (item) {
+        return item !== listener;
+      });
+    };
+  };
+
+  var notifyListeners = function notifyListeners() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    listeners.forEach(function (listener) {
+      return listener.apply(undefined, args);
+    });
+  };
+
+  return {
+    setPrompt: setPrompt,
+    confirmTransitionTo: confirmTransitionTo,
+    appendListener: appendListener,
+    notifyListeners: notifyListeners
+  };
+};
+
+exports.default = createTransitionManager;
+
+/***/ }),
+/* 51 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Router__ = __webpack_require__(52);
+// Written in this round about way for babel-transform-imports
+
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Router__["a" /* default */]);
+
+/***/ }),
+/* 52 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+/**
+ * The public API for putting history on context.
+ */
+
+var Router = function (_React$Component) {
+  _inherits(Router, _React$Component);
+
+  function Router() {
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Router);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
+      match: _this.computeMatch(_this.props.history.location.pathname)
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  Router.prototype.getChildContext = function getChildContext() {
+    return {
+      router: _extends({}, this.context.router, {
+        history: this.props.history,
+        route: {
+          location: this.props.history.location,
+          match: this.state.match
+        }
+      })
+    };
+  };
+
+  Router.prototype.computeMatch = function computeMatch(pathname) {
+    return {
+      path: '/',
+      url: '/',
+      params: {},
+      isExact: pathname === '/'
+    };
+  };
+
+  Router.prototype.componentWillMount = function componentWillMount() {
+    var _this2 = this;
+
+    var _props = this.props,
+        children = _props.children,
+        history = _props.history;
+
+
+    __WEBPACK_IMPORTED_MODULE_1_invariant___default()(children == null || __WEBPACK_IMPORTED_MODULE_2_react___default.a.Children.count(children) === 1, 'A <Router> may have only one child element');
+
+    // Do this here so we can setState when a <Redirect> changes the
+    // location in componentWillMount. This happens e.g. when doing
+    // server rendering using a <StaticRouter>.
+    this.unlisten = history.listen(function () {
+      _this2.setState({
+        match: _this2.computeMatch(history.location.pathname)
+      });
+    });
+  };
+
+  Router.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    __WEBPACK_IMPORTED_MODULE_0_warning___default()(this.props.history === nextProps.history, 'You cannot change <Router history>');
+  };
+
+  Router.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.unlisten();
+  };
+
+  Router.prototype.render = function render() {
+    var children = this.props.children;
+
+    return children ? __WEBPACK_IMPORTED_MODULE_2_react___default.a.Children.only(children) : null;
+  };
+
+  return Router;
+}(__WEBPACK_IMPORTED_MODULE_2_react___default.a.Component);
+
+Router.propTypes = {
+  history: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.object.isRequired,
+  children: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.node
+};
+Router.contextTypes = {
+  router: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.object
+};
+Router.childContextTypes = {
+  router: __WEBPACK_IMPORTED_MODULE_3_prop_types___default.a.object.isRequired
+};
+
+
+/* harmony default export */ __webpack_exports__["a"] = (Router);
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_path_to_regexp__);
+
+
+var patternCache = {};
+var cacheLimit = 10000;
+var cacheCount = 0;
+
+var compilePath = function compilePath(pattern, options) {
+  var cacheKey = '' + options.end + options.strict + options.sensitive;
+  var cache = patternCache[cacheKey] || (patternCache[cacheKey] = {});
+
+  if (cache[pattern]) return cache[pattern];
+
+  var keys = [];
+  var re = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default()(pattern, keys, options);
+  var compiledPattern = { re: re, keys: keys };
+
+  if (cacheCount < cacheLimit) {
+    cache[pattern] = compiledPattern;
+    cacheCount++;
+  }
+
+  return compiledPattern;
+};
+
+/**
+ * Public API for matching a URL pathname to a path pattern.
+ */
+var matchPath = function matchPath(pathname) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (typeof options === 'string') options = { path: options };
+
+  var _options = options,
+      _options$path = _options.path,
+      path = _options$path === undefined ? '/' : _options$path,
+      _options$exact = _options.exact,
+      exact = _options$exact === undefined ? false : _options$exact,
+      _options$strict = _options.strict,
+      strict = _options$strict === undefined ? false : _options$strict,
+      _options$sensitive = _options.sensitive,
+      sensitive = _options$sensitive === undefined ? false : _options$sensitive;
+
+  var _compilePath = compilePath(path, { end: exact, strict: strict, sensitive: sensitive }),
+      re = _compilePath.re,
+      keys = _compilePath.keys;
+
+  var match = re.exec(pathname);
+
+  if (!match) return null;
+
+  var url = match[0],
+      values = match.slice(1);
+
+  var isExact = pathname === url;
+
+  if (exact && !isExact) return null;
+
+  return {
+    path: path, // the path pattern used to match
+    url: path === '/' && url === '' ? '/' : url, // the matched portion of the URL
+    isExact: isExact, // whether or not we matched exactly
+    params: keys.reduce(function (memo, key, index) {
+      memo[key.name] = values[index];
+      return memo;
+    }, {})
+  };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (matchPath);
+
+/***/ }),
+/* 54 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
+
+
+var createTransitionManager = function createTransitionManager() {
+  var prompt = null;
+
+  var setPrompt = function setPrompt(nextPrompt) {
+    __WEBPACK_IMPORTED_MODULE_0_warning___default()(prompt == null, 'A history supports only one prompt at a time');
+
+    prompt = nextPrompt;
+
+    return function () {
+      if (prompt === nextPrompt) prompt = null;
+    };
+  };
+
+  var confirmTransitionTo = function confirmTransitionTo(location, action, getUserConfirmation, callback) {
+    // TODO: If another transition starts while we're still confirming
+    // the previous one, we may end up in a weird state. Figure out the
+    // best way to handle this.
+    if (prompt != null) {
+      var result = typeof prompt === 'function' ? prompt(location, action) : prompt;
+
+      if (typeof result === 'string') {
+        if (typeof getUserConfirmation === 'function') {
+          getUserConfirmation(result, callback);
+        } else {
+          __WEBPACK_IMPORTED_MODULE_0_warning___default()(false, 'A history needs a getUserConfirmation function in order to use a prompt message');
+
+          callback(true);
+        }
+      } else {
+        // Return false from a transition hook to cancel the transition.
+        callback(result !== false);
+      }
+    } else {
+      callback(true);
+    }
+  };
+
+  var listeners = [];
+
+  var appendListener = function appendListener(fn) {
+    var isActive = true;
+
+    var listener = function listener() {
+      if (isActive) fn.apply(undefined, arguments);
+    };
+
+    listeners.push(listener);
+
+    return function () {
+      isActive = false;
+      listeners = listeners.filter(function (item) {
+        return item !== listener;
+      });
+    };
+  };
+
+  var notifyListeners = function notifyListeners() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    listeners.forEach(function (listener) {
+      return listener.apply(undefined, args);
+    });
+  };
+
+  return {
+    setPrompt: setPrompt,
+    confirmTransitionTo: confirmTransitionTo,
+    appendListener: appendListener,
+    notifyListeners: notifyListeners
+  };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (createTransitionManager);
+
+/***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12311,7 +12311,7 @@ module.exports = isLength;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(15),
-    isSymbol = __webpack_require__(41);
+    isSymbol = __webpack_require__(42);
 
 /** Used to match property names within property paths. */
 var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -14019,7 +14019,7 @@ Link.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__matchPath__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__matchPath__ = __webpack_require__(53);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26214,7 +26214,7 @@ return zhTw;
 /* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(35),
+var ListCache = __webpack_require__(36),
     stackClear = __webpack_require__(331),
     stackDelete = __webpack_require__(332),
     stackGet = __webpack_require__(333),
@@ -26291,7 +26291,7 @@ module.exports = eq;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(26),
-    isObject = __webpack_require__(38);
+    isObject = __webpack_require__(39);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -26546,7 +26546,7 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
 
 /***/ }),
 /* 205 */
@@ -26689,7 +26689,7 @@ module.exports = baseIteratee;
 /* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(38);
+var isObject = __webpack_require__(39);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -26737,7 +26737,7 @@ module.exports = matchesStrictComparable;
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(212),
-    toKey = __webpack_require__(42);
+    toKey = __webpack_require__(43);
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -31703,7 +31703,7 @@ jStat.models = (function(){
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(43));
+		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(44));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -52406,7 +52406,7 @@ var require$$0 = __webpack_require__(31);
 var emptyObject = __webpack_require__(30);
 var invariant = __webpack_require__(16);
 var emptyFunction = __webpack_require__(13);
-var checkPropTypes = __webpack_require__(45);
+var checkPropTypes = __webpack_require__(46);
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -54145,7 +54145,7 @@ if (undefined === 'production') {
  LICENSE file in the root directory of this source tree.
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(6);__webpack_require__(16);var l=__webpack_require__(47),n=__webpack_require__(21),ba=__webpack_require__(67),ca=__webpack_require__(13),da=__webpack_require__(30),ea=__webpack_require__(68),fa=__webpack_require__(69),ha=__webpack_require__(70),ia=__webpack_require__(71);
+var aa=__webpack_require__(6);__webpack_require__(16);var l=__webpack_require__(48),n=__webpack_require__(21),ba=__webpack_require__(67),ca=__webpack_require__(13),da=__webpack_require__(30),ea=__webpack_require__(68),fa=__webpack_require__(69),ha=__webpack_require__(70),ia=__webpack_require__(71);
 function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -54472,7 +54472,7 @@ if (undefined !== "production") {
 
 var react = __webpack_require__(6);
 var invariant = __webpack_require__(16);
-var ExecutionEnvironment = __webpack_require__(47);
+var ExecutionEnvironment = __webpack_require__(48);
 var _assign = __webpack_require__(21);
 var EventListener = __webpack_require__(67);
 var require$$0 = __webpack_require__(31);
@@ -54482,7 +54482,7 @@ var camelizeStyleName = __webpack_require__(240);
 var performanceNow = __webpack_require__(242);
 var propTypes = __webpack_require__(9);
 var emptyObject = __webpack_require__(30);
-var checkPropTypes = __webpack_require__(45);
+var checkPropTypes = __webpack_require__(46);
 var shallowEqual = __webpack_require__(68);
 var containsNode = __webpack_require__(69);
 var focusNode = __webpack_require__(70);
@@ -71886,7 +71886,7 @@ module.exports = performanceNow;
 
 
 
-var ExecutionEnvironment = __webpack_require__(47);
+var ExecutionEnvironment = __webpack_require__(48);
 
 var performance;
 
@@ -71915,8 +71915,8 @@ var invariant = __webpack_require__(16);
 var warning = __webpack_require__(31);
 var assign = __webpack_require__(21);
 
-var ReactPropTypesSecret = __webpack_require__(46);
-var checkPropTypes = __webpack_require__(45);
+var ReactPropTypesSecret = __webpack_require__(47);
+var checkPropTypes = __webpack_require__(46);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -72461,7 +72461,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 var emptyFunction = __webpack_require__(13);
 var invariant = __webpack_require__(16);
-var ReactPropTypesSecret = __webpack_require__(46);
+var ReactPropTypesSecret = __webpack_require__(47);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -72523,7 +72523,7 @@ module.exports = function() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory__ = __webpack_require__(247);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(51);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -72598,11 +72598,11 @@ var _invariant = __webpack_require__(10);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(48);
+var _LocationUtils = __webpack_require__(49);
 
 var _PathUtils = __webpack_require__(23);
 
-var _createTransitionManager = __webpack_require__(49);
+var _createTransitionManager = __webpack_require__(50);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -72903,7 +72903,7 @@ exports.default = createBrowserHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createHashHistory__ = __webpack_require__(249);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createHashHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createHashHistory__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(51);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -72975,11 +72975,11 @@ var _invariant = __webpack_require__(10);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(48);
+var _LocationUtils = __webpack_require__(49);
 
 var _PathUtils = __webpack_require__(23);
 
-var _createTransitionManager = __webpack_require__(49);
+var _createTransitionManager = __webpack_require__(50);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -73310,7 +73310,7 @@ exports.default = createHashHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createMemoryHistory__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createMemoryHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createMemoryHistory__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(52);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -73383,9 +73383,9 @@ var _warning2 = _interopRequireDefault(_warning);
 
 var _PathUtils = __webpack_require__(23);
 
-var _LocationUtils = __webpack_require__(48);
+var _LocationUtils = __webpack_require__(49);
 
-var _createTransitionManager = __webpack_require__(49);
+var _createTransitionManager = __webpack_require__(50);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -74321,7 +74321,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(78);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -74625,7 +74625,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(78);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -74944,7 +74944,7 @@ var createHashHistory = function createHashHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(54);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -75129,7 +75129,7 @@ var createMemoryHistory = function createMemoryHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_history_PathUtils__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Router__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Router__ = __webpack_require__(52);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -75321,7 +75321,7 @@ StaticRouter.childContextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__matchPath__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__matchPath__ = __webpack_require__(53);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -75407,7 +75407,7 @@ Switch.propTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_matchPath__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_matchPath__ = __webpack_require__(53);
 // Written in this round about way for babel-transform-imports
 
 
@@ -75617,48 +75617,10 @@ var Layout = exports.Layout = function Layout(props) {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(
-      'header',
-      null,
-      _react2.default.createElement(
-        'nav',
-        { className: 'navbar navbar-expand-lg' },
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { className: 'navbar-brand', to: '/' },
-          'CryptoCurrency Simulator'
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'collapse navbar-collapse', id: 'navbarSupportedContent' },
-          _react2.default.createElement(
-            'ul',
-            { className: 'navbar-nav mr-auto' },
-            _react2.default.createElement(
-              'li',
-              { className: 'nav-item active' },
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { className: 'nav-link', to: '/' },
-                'Home'
-              )
-            ),
-            _react2.default.createElement(
-              'li',
-              { className: 'nav-item' },
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { className: 'nav-link', to: '/about' },
-                'About'
-              )
-            )
-          )
-        )
-      )
-    ),
+    _react2.default.createElement('header', null),
     _react2.default.createElement(
       'div',
-      { className: 'app-container container-fluid' },
+      null,
       props.children
     ),
     _react2.default.createElement(
@@ -75669,7 +75631,7 @@ var Layout = exports.Layout = function Layout(props) {
         { className: 'container' },
         _react2.default.createElement(
           'span',
-          null,
+          { style: { fontSize: 'small' } },
           'A risk analysis application that uses geometric Brownian motion to forecast future cryptocurrency prices.'
         ),
         _react2.default.createElement(
@@ -75715,6 +75677,8 @@ var _Analysis = __webpack_require__(275);
 
 var _Analysis2 = _interopRequireDefault(_Analysis);
 
+var _reactChartjs = __webpack_require__(33);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -75749,9 +75713,32 @@ var IndexPage = function (_React$Component) {
 				meanDrift: Number
 			},
 			timestamp: Number,
-			interval: "1d"
+			interval: "1d",
+			graphData: []
 		};
 		_this.ccxt = __webpack_require__(413);
+		_this.options = {
+			maintainAspectRatio: false,
+			elements: {
+				line: {
+					//fill: false
+				}
+			},
+			scales: {
+				xAxes: [{
+					display: false,
+					gridLines: {
+						display: false
+					}
+				}],
+				yAxes: [{
+					display: false,
+					gridLines: {
+						display: false
+					}
+				}]
+			}
+		};
 
 		_this.handleSubmit = _this.handleSubmit.bind(_this);
 		_this.handleFormChange = _this.handleFormChange.bind(_this);
@@ -75762,6 +75749,7 @@ var IndexPage = function (_React$Component) {
 	_createClass(IndexPage, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			this.getChartData();
 			this.setState({ exchanges: this.ccxt.exchanges });
 		}
 	}, {
@@ -75810,29 +75798,88 @@ var IndexPage = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'getChartData',
+		value: function getChartData() {
+			var _this3 = this;
+
+			var exchange = new this.ccxt['gdax']();
+			var graphData = {};
+			(async function () {
+				return await exchange.fetchOHLCV('BTC/USD', '1m');
+			})().then(function (res) {
+				// reverse the closing prices
+				var data = [];
+				for (var j = res.length - 1; j >= 0; j--) {
+					data.push(res[j][4]);
+				}
+				console.log(data);
+				_this3.setState({ graphData: data });
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
+			var _this4 = this;
+
+			var data = function data(canvas) {
+				var ctx = canvas.getContext("2d");
+				var gradient = ctx.createLinearGradient(0, 0, 0, 100);
+				gradient.addColorStop(0, 'rgba(241, 254, 249, 0.8');
+				gradient.addColorStop(1, 'rgba(241, 254, 249, 0');
+
+				var labels = [];
+				for (var i = 0; i < _this4.state.graphData.length; i++) {
+					labels[i] = i;
+				}return {
+					labels: labels,
+					datasets: [{
+						//label: "Future Data",
+						lineTension: 0.1,
+						borderCapStyle: 'butt',
+						borderDash: [],
+						borderDashOffset: 0.0,
+						borderJoinStyle: 'miter',
+						pointBorderWidth: 1,
+						pointHoverRadius: 1,
+						pointHoverBorderWidth: 2,
+						pointRadius: 1,
+						pointHitRadius: 2,
+						backgroundColor: gradient,
+						borderColor: '#FBFEF9',
+						pointBorderColor: '#FBFEF9',
+						pointBackgroundColor: '#FBFEF9',
+						pointHoverBackgroundColor: '#FBFEF9',
+						pointHoverBorderColor: '#FBFEF9',
+						data: _this4.state.graphData
+					}]
+				};
+			};
 			return _react2.default.createElement(
 				'div',
 				null,
 				_react2.default.createElement(
 					'div',
-					{ className: 'row' },
+					{ className: 'container' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'col-md-6 offset-md-3' },
+						{ className: 'header-chart-container' },
+						_react2.default.createElement(_reactChartjs.Line, { data: data, options: this.options, legend: { display: false }, height: 100, width: 100 })
+					),
+					_react2.default.createElement(
+						'h1',
+						{ className: 'display-3 text-center' },
+						'CryptoCurrency Simulator'
+					),
+					_react2.default.createElement(
+						'form',
+						{ onSubmit: this.handleSubmit, className: 'form-group' },
 						_react2.default.createElement(
-							'form',
-							{ onSubmit: this.handleSubmit, className: 'form-inline form-container' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'sr-only', htmlFor: 'exchange' },
-								'Exchange'
-							),
+							'div',
+							{ className: 'input-group' },
 							_react2.default.createElement(
 								'select',
 								{ name: 'exchange', onChange: this.getMarkets,
-									className: 'form-check custom-select mb-2 mr-sm-2 mb-sm-0',
+									className: 'form-control',
 									required: true },
 								_react2.default.createElement(
 									'option',
@@ -75849,7 +75896,7 @@ var IndexPage = function (_React$Component) {
 							),
 							_react2.default.createElement(
 								'select',
-								{ name: 'market', className: 'form-check custom-select mb-2 mr-sm-2 mb-sm-0', onChange: this.handleFormChange, required: true },
+								{ name: 'market', className: 'form-control', onChange: this.handleFormChange, required: true },
 								_react2.default.createElement(
 									'option',
 									{ value: '', disabled: true, selected: true },
@@ -75864,22 +75911,18 @@ var IndexPage = function (_React$Component) {
 								})
 							),
 							_react2.default.createElement(
-								'button',
-								{ type: 'submit', className: 'btn btn-primary' },
-								'Simulate'
+								'span',
+								{ className: 'input-group-btn' },
+								_react2.default.createElement(
+									'button',
+									{ type: 'submit', className: 'btn btn-primary' },
+									'Simulate'
+								)
 							)
 						)
 					)
 				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'row' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-md-10 offset-md-1', id: 'analysis-container' },
-						_react2.default.createElement(_Analysis2.default, { historicalData: this.state.candlestickChart, timestamp: this.state.timestamp })
-					)
-				)
+				_react2.default.createElement(_Analysis2.default, { historicalData: this.state.candlestickChart, timestamp: this.state.timestamp })
 			);
 		}
 	}]);
@@ -75906,7 +75949,7 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactChartjs = __webpack_require__(54);
+var _reactChartjs = __webpack_require__(33);
 
 var _Simulation = __webpack_require__(411);
 
@@ -75944,38 +75987,7 @@ var Analysis = function (_React$Component) {
         dailyDrift: Number,
         annualDrift: Number,
         meanDrift: Number
-      },
-      simulations: [], // n simulations documenting the closing price at the end of that simulation
-      numberOfSimulations: 1000,
-      simulationsData: [{
-        bin: Number,
-        normdist: Number,
-        normalDistribution: Number
-      }],
-      simulationAnalysis: {
-        mean: Number,
-        median: Number,
-        stdev: Number,
-        min: Number,
-        max: Number,
-        range: Number,
-        percentiles: {
-          cur: Number,
-          sd1: {
-            low: Number,
-            high: Number
-          },
-          sd2: {
-            low: Number,
-            high: Number
-          },
-          sd3: {
-            low: Number,
-            high: Number
-          }
-        }
-      },
-      histogram: []
+      }
     };
     _this.utc = 0;
     _this.open = 1;
@@ -75993,95 +76005,12 @@ var Analysis = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.historicalData.length > 0 && this.props.timestamp !== nextProps.timestamp) {
         this.calculateSummaryStatistics();
-        //this.calculateFutureData();
-        this.simulate(this.state.numberOfSimulations);
       }
     }
   }, {
     key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate(nextProps, nextState) {
       return nextProps.historicalData.length > 0 && this.props.timestamp !== nextProps.timestamp;
-    }
-  }, {
-    key: 'getChartData',
-    value: function getChartData() {
-      var futureDataLabels = [];
-      for (var i = 0; i < 365; i++) {
-        futureDataLabels[i] = i;
-      }
-      var histogramLabels = [];
-      var normalDistributions = [];
-      // cut the graph in half
-      for (var j = 0; j < this.state.simulationsData.length / 2; j++) {
-        if (!isNaN(this.state.simulationsData[j].bin)) histogramLabels.push(this.state.simulationsData[j].bin.toFixed(3));else histogramLabels.push(this.state.simulationsData[j].bin);
-        normalDistributions.push(this.state.simulationsData[j].normalDistribution);
-      }
-      var data = {
-        futureData: {
-          labels: futureDataLabels,
-          datasets: [{
-            label: "Future Data",
-            fill: false,
-            lineTension: 0.1,
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: []
-          }]
-        },
-        simulationsGraphData: {
-          labels: histogramLabels,
-          datasets: [{
-            label: 'Normal Distribution',
-            type: 'line',
-            data: normalDistributions,
-            fill: false,
-            borderColor: '#EC932F',
-            backgroundColor: '#EC932F',
-            pointBorderColor: '#EC932F',
-            pointBackgroundColor: '#EC932F',
-            pointHoverBackgroundColor: '#EC932F',
-            pointHoverBorderColor: '#EC932F',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10
-          }, {
-            type: 'bar',
-            label: 'Histogram',
-            data: this.state.histogram,
-            fill: false,
-            backgroundColor: '#71B37C',
-            borderColor: '#71B37C',
-            hoverBackgroundColor: '#71B37C',
-            hoverBorderColor: '#71B37C'
-          }]
-        },
-        test: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [65, 59, 80, 81, 56, 55, 40]
-          }]
-        }
-      };
-      data.futureData.datasets[0].data = this.state.futureData;
-      //data.simulationsGraphData.datasets[0].data = normalDistributions;
-      //data.simulationsGraphData.datasets[1].data = this.state.histogram;
-      return data;
     }
   }, {
     key: 'calculateSummaryStatistics',
@@ -76133,125 +76062,15 @@ var Analysis = function (_React$Component) {
       this.setState({ summaryStatistics: summaryStatistics });
     }
   }, {
-    key: 'calculateFutureData',
-    value: function calculateFutureData() {
-      var futureData = [];
-      for (var i = 0; i < 365; i++) {
-        if (i === 0) futureData[i] = this.props.historicalData[0][this.close];else {
-          var normdist = this.normsInv(Math.random(), 0, 1);
-          var logReturn = this.state.summaryStatistics.meanDrift + this.state.summaryStatistics.dailyVolatility * normdist;
-          futureData[i] = futureData[i - 1] * Math.exp(logReturn);
-        }
-      }
-      this.setState({ futureData: futureData });
-    }
-  }, {
-    key: 'simulate',
-    value: function simulate(numSimulations) {
-      var simulations = [];
-      // using the formula to simulate a year
-      // Close*EXP((annualDrift-0.5*annualVolatility^2)+annualVolatility*norminv(rand(),0,1))
-      for (var i = 0; i < numSimulations; i++) {
-        simulations.push(this.props.historicalData[0][this.close] * Math.exp(this.state.summaryStatistics.annualDrift - 0.5 * Math.pow(this.state.summaryStatistics.annualVolatility, 2) + this.state.summaryStatistics.annualVolatility * _StatisticalFunctions2.default.normsInv(Math.random(), 0, 1)));
-      }
-      this.setState({ simulations: simulations });
-      console.log(simulations);
-      var simulationAnalysis = this.state.simulationAnalysis;
-
-      simulationAnalysis.mean = this.jStat.mean(simulations);
-      simulationAnalysis.median = this.jStat.median(simulations);
-      simulationAnalysis.stdev = this.jStat.stdev(simulations);
-      simulationAnalysis.min = this.jStat.min(simulations);
-      simulationAnalysis.max = this.jStat.max(simulations);
-      simulationAnalysis.range = this.jStat.range(simulations);
-
-      simulationAnalysis.percentiles.cur = this.jStat.percentile(simulations, 0.5);
-      simulationAnalysis.percentiles.sd1.low = this.jStat.percentile(simulations, 0.159);
-      simulationAnalysis.percentiles.sd1.high = this.jStat.percentile(simulations, 0.841);
-      simulationAnalysis.percentiles.sd2.low = this.jStat.percentile(simulations, 0.05);
-      simulationAnalysis.percentiles.sd2.high = this.jStat.percentile(simulations, 0.95);
-      simulationAnalysis.percentiles.sd3.low = this.jStat.percentile(simulations, 0.01);
-      simulationAnalysis.percentiles.sd3.high = this.jStat.percentile(simulations, 0.99);
-
-      //this.setState({simulationsLogNormDist: this.jStat.lognormal()})
-      var numBins = 200;
-      var simulationsData = this.state.simulationsData;
-      for (var j = 0; j < numBins; j++) {
-        var bin = j == 0 ? Math.floor(simulationAnalysis.min) : simulationsData[j - 1].bin + simulationAnalysis.range / numBins;
-        var normdist = this.jStat.normal.pdf(bin, simulationAnalysis.mean, simulationAnalysis.stdev);
-        simulationsData[j] = {
-          bin: bin,
-          normdist: normdist,
-          normalDistribution: numSimulations * (simulationAnalysis.range / numBins) * normdist
-        };
-      }
-
-      // calculate histogram
-      this.setState({ histogram: this.jStat.histogram(this.state.simulations, numBins) });
-
-      console.log(this.state.simulationAnalysis);
-    }
-  }, {
     key: 'render',
     value: function render() {
       if (this.props.historicalData.length === 0) return null;
-      var data = this.getChartData();
-      var options = {
-        responsive: true,
-        tooltips: {
-          mode: 'label'
-        },
-        elements: {
-          line: {
-            fill: false
-          }
-        },
-        scales: {
-          xAxes: [{
-            display: true,
-            gridLines: {
-              display: false
-            }
-          }],
-          yAxes: [{
-            type: 'linear',
-            display: true,
-            position: 'left',
-            gridLines: {
-              display: false
-            }
-          }, {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            gridLines: {
-              display: false
-            }
-          }]
-        }
-      };
+      _reactChartjs.defaults.global.defaultFontColor = "#cad6e6";
       console.log(this.props.historicalData);
       return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'row' },
-          _react2.default.createElement(
-            'div',
-            { className: 'col-md-4 offset-md-1' },
-            _react2.default.createElement(
-              'h3',
-              null,
-              'One Year Simulation'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-md-6' },
-            _react2.default.createElement(_Simulation2.default, { historicalData: this.props.historicalData, summaryStatistics: this.state.summaryStatistics })
-          )
-        ),
+        'section',
+        { className: 'container graph-container' },
+        _react2.default.createElement(_Simulation2.default, { historicalData: this.props.historicalData, summaryStatistics: this.state.summaryStatistics }),
         _react2.default.createElement(_Simulations2.default, { historicalData: this.props.historicalData, summaryStatistics: this.state.summaryStatistics })
       );
     }
@@ -76409,7 +76228,7 @@ module.exports = function() {
 "use strict";
 
 
-var helpers = __webpack_require__(33);
+var helpers = __webpack_require__(34);
 
 /**
  * Easing functions adapted from Robert Penner's easing equations.
@@ -76666,7 +76485,7 @@ helpers.easingEffects = effects;
 "use strict";
 
 
-var helpers = __webpack_require__(33);
+var helpers = __webpack_require__(34);
 
 /**
  * @namespace Chart.helpers.canvas
@@ -76887,7 +76706,7 @@ helpers.drawRoundedRectangle = function(ctx) {
 "use strict";
 
 
-var helpers = __webpack_require__(33);
+var helpers = __webpack_require__(34);
 
 /**
  * @alias Chart.helpers.options
@@ -89439,7 +89258,7 @@ module.exports = listCacheClear;
 /* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(36);
+var assocIndexOf = __webpack_require__(37);
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype;
@@ -89480,7 +89299,7 @@ module.exports = listCacheDelete;
 /* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(36);
+var assocIndexOf = __webpack_require__(37);
 
 /**
  * Gets the list cache value for `key`.
@@ -89505,7 +89324,7 @@ module.exports = listCacheGet;
 /* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(36);
+var assocIndexOf = __webpack_require__(37);
 
 /**
  * Checks if a list cache value for `key` exists.
@@ -89527,7 +89346,7 @@ module.exports = listCacheHas;
 /* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(36);
+var assocIndexOf = __webpack_require__(37);
 
 /**
  * Sets the list cache `key` to `value`.
@@ -89559,7 +89378,7 @@ module.exports = listCacheSet;
 /* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(35);
+var ListCache = __webpack_require__(36);
 
 /**
  * Removes all key-value entries from the stack.
@@ -89644,7 +89463,7 @@ module.exports = stackHas;
 /* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(35),
+var ListCache = __webpack_require__(36),
     Map = __webpack_require__(56),
     MapCache = __webpack_require__(57);
 
@@ -89686,7 +89505,7 @@ module.exports = stackSet;
 
 var isFunction = __webpack_require__(199),
     isMasked = __webpack_require__(339),
-    isObject = __webpack_require__(38),
+    isObject = __webpack_require__(39),
     toSource = __webpack_require__(201);
 
 /**
@@ -89737,7 +89556,7 @@ module.exports = baseIsNative;
 /* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(37);
+var Symbol = __webpack_require__(38);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -89875,7 +89694,7 @@ module.exports = getValue;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Hash = __webpack_require__(343),
-    ListCache = __webpack_require__(35),
+    ListCache = __webpack_require__(36),
     Map = __webpack_require__(56);
 
 /**
@@ -89939,7 +89758,7 @@ module.exports = Hash;
 /* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(39);
+var nativeCreate = __webpack_require__(40);
 
 /**
  * Removes all key-value entries from the hash.
@@ -89983,7 +89802,7 @@ module.exports = hashDelete;
 /* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(39);
+var nativeCreate = __webpack_require__(40);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -90019,7 +89838,7 @@ module.exports = hashGet;
 /* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(39);
+var nativeCreate = __webpack_require__(40);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -90048,7 +89867,7 @@ module.exports = hashHas;
 /* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(39);
+var nativeCreate = __webpack_require__(40);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -90077,7 +89896,7 @@ module.exports = hashSet;
 /* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(40);
+var getMapData = __webpack_require__(41);
 
 /**
  * Removes `key` and its value from the map.
@@ -90122,7 +89941,7 @@ module.exports = isKeyable;
 /* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(40);
+var getMapData = __webpack_require__(41);
 
 /**
  * Gets the map value for `key`.
@@ -90144,7 +89963,7 @@ module.exports = mapCacheGet;
 /* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(40);
+var getMapData = __webpack_require__(41);
 
 /**
  * Checks if a map value for `key` exists.
@@ -90166,7 +89985,7 @@ module.exports = mapCacheHas;
 /* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(40);
+var getMapData = __webpack_require__(41);
 
 /**
  * Sets the map `key` to `value`.
@@ -90320,7 +90139,7 @@ module.exports = cacheHas;
 /* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(37),
+var Symbol = __webpack_require__(38),
     Uint8Array = __webpack_require__(360),
     eq = __webpack_require__(198),
     equalArrays = __webpack_require__(202),
@@ -91001,7 +90820,7 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
 
 /***/ }),
 /* 377 */
@@ -91427,7 +91246,7 @@ var baseIsEqual = __webpack_require__(55),
     isKey = __webpack_require__(60),
     isStrictComparable = __webpack_require__(209),
     matchesStrictComparable = __webpack_require__(210),
-    toKey = __webpack_require__(42);
+    toKey = __webpack_require__(43);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -91678,10 +91497,10 @@ module.exports = toString;
 /* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(37),
+var Symbol = __webpack_require__(38),
     arrayMap = __webpack_require__(398),
     isArray = __webpack_require__(15),
-    isSymbol = __webpack_require__(41);
+    isSymbol = __webpack_require__(42);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -91812,7 +91631,7 @@ var castPath = __webpack_require__(212),
     isArray = __webpack_require__(15),
     isIndex = __webpack_require__(205),
     isLength = __webpack_require__(59),
-    toKey = __webpack_require__(42);
+    toKey = __webpack_require__(43);
 
 /**
  * Checks if `path` exists on `object`.
@@ -91882,7 +91701,7 @@ module.exports = identity;
 var baseProperty = __webpack_require__(404),
     basePropertyDeep = __webpack_require__(405),
     isKey = __webpack_require__(60),
-    toKey = __webpack_require__(42);
+    toKey = __webpack_require__(43);
 
 /**
  * Creates a function that returns the value at `path` of a given object.
@@ -92140,8 +91959,8 @@ module.exports = toFinite;
 /* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(38),
-    isSymbol = __webpack_require__(41);
+var isObject = __webpack_require__(39),
+    isSymbol = __webpack_require__(42);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
@@ -92225,7 +92044,7 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactChartjs = __webpack_require__(54);
+var _reactChartjs = __webpack_require__(33);
 
 var _StatisticalFunctions = __webpack_require__(61);
 
@@ -92313,6 +92132,15 @@ var Simulation = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h3',
+            null,
+            'One Year Simulation'
+          )
+        ),
         _react2.default.createElement(_reactChartjs.Line, { data: data })
       );
     }
@@ -92340,7 +92168,7 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactChartjs = __webpack_require__(54);
+var _reactChartjs = __webpack_require__(33);
 
 var _StatisticalFunctions = __webpack_require__(61);
 
@@ -92449,10 +92277,10 @@ var Simulations = function (_React$Component) {
           label: 'Histogram',
           data: this.state.histogram,
           fill: false,
-          backgroundColor: '#71B37C',
-          borderColor: '#71B37C',
-          hoverBackgroundColor: '#71B37C',
-          hoverBorderColor: '#71B37C'
+          backgroundColor: '#DC1975',
+          borderColor: '#DC1975',
+          hoverBackgroundColor: '#DC1975',
+          hoverBorderColor: '#DC1975'
         }]
       };
       data.datasets[0].data = normalDistributions;
@@ -92545,21 +92373,17 @@ var Simulations = function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'row' },
+          null,
           _react2.default.createElement(
-            'div',
-            { className: 'col-md-4 offset-md-1' },
-            _react2.default.createElement(
-              'h3',
-              null,
-              'Multi-Year Simulation'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-md-6' },
-            _react2.default.createElement(_reactChartjs.Bar, { data: data, options: options })
+            'h3',
+            null,
+            'Multi-Year Simulation'
           )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_reactChartjs.Bar, { data: data })
         ),
         _react2.default.createElement(
           'div',
@@ -92865,7 +92689,7 @@ const exchanges = {
     'mixcoins':            __webpack_require__ (501),
     'nova':                __webpack_require__ (502),
     'okcoincny':           __webpack_require__ (503),
-    'okcoinusd':           __webpack_require__ (44),
+    'okcoinusd':           __webpack_require__ (45),
     'okex':                __webpack_require__ (504),
     'paymium':             __webpack_require__ (505),
     'poloniex':            __webpack_require__ (506),
@@ -93091,7 +92915,7 @@ process.umask = function() { return 0; };
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(43), __webpack_require__(416), __webpack_require__(417), __webpack_require__(19), __webpack_require__(20), __webpack_require__(63), __webpack_require__(214), __webpack_require__(418), __webpack_require__(215), __webpack_require__(419), __webpack_require__(420), __webpack_require__(421), __webpack_require__(64), __webpack_require__(422), __webpack_require__(17), __webpack_require__(7), __webpack_require__(423), __webpack_require__(424), __webpack_require__(425), __webpack_require__(426), __webpack_require__(427), __webpack_require__(428), __webpack_require__(429), __webpack_require__(430), __webpack_require__(431), __webpack_require__(432), __webpack_require__(433), __webpack_require__(434), __webpack_require__(435), __webpack_require__(436), __webpack_require__(437), __webpack_require__(438));
+		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(44), __webpack_require__(416), __webpack_require__(417), __webpack_require__(19), __webpack_require__(20), __webpack_require__(63), __webpack_require__(214), __webpack_require__(418), __webpack_require__(215), __webpack_require__(419), __webpack_require__(420), __webpack_require__(421), __webpack_require__(64), __webpack_require__(422), __webpack_require__(17), __webpack_require__(7), __webpack_require__(423), __webpack_require__(424), __webpack_require__(425), __webpack_require__(426), __webpack_require__(427), __webpack_require__(428), __webpack_require__(429), __webpack_require__(430), __webpack_require__(431), __webpack_require__(432), __webpack_require__(433), __webpack_require__(434), __webpack_require__(435), __webpack_require__(436), __webpack_require__(437), __webpack_require__(438));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -93434,7 +93258,7 @@ process.umask = function() { return 0; };
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(43), __webpack_require__(215));
+		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(44), __webpack_require__(215));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -93522,7 +93346,7 @@ process.umask = function() { return 0; };
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(43));
+		module.exports = exports = factory(__webpack_require__(4), __webpack_require__(44));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -96999,7 +96823,7 @@ const xhrFetch = (url, options, verbose = false) =>
 
 module.exports = nodeFetch || windowFetch || xhrFetch
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
 
 /***/ }),
 /* 444 */
@@ -97536,7 +97360,7 @@ module.exports = class _1btcxe extends Exchange {
 
 //  ---------------------------------------------------------------------------
 
-const okcoinusd = __webpack_require__ (44)
+const okcoinusd = __webpack_require__ (45)
 
 //  ---------------------------------------------------------------------------
 
@@ -111578,7 +111402,7 @@ module.exports = class nova extends Exchange {
 
 // ---------------------------------------------------------------------------
 
-const okcoinusd = __webpack_require__ (44)
+const okcoinusd = __webpack_require__ (45)
 
 // ---------------------------------------------------------------------------
 
@@ -111621,7 +111445,7 @@ module.exports = class okcoincny extends okcoinusd {
 
 // ---------------------------------------------------------------------------
 
-const okcoinusd = __webpack_require__ (44)
+const okcoinusd = __webpack_require__ (45)
 
 // ---------------------------------------------------------------------------
 

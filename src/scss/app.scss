@@ -18,7 +18,7 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 100px; /* Set the fixed height of the footer here */
+  height: 80px; /* Set the fixed height of the footer here */
   background-color: $body-bg;
 }
 
@@ -34,6 +34,18 @@ body {
 }
 
 .app-container {
-	padding-top:15px;
-	padding-bottom:20px;
+    padding-bottom: 25px;
+}
+
+.graph-container {
+    padding-top: 15px;
+    padding-bottom: 20px;
+    border-radius: 0px 0px 10px 10px;
+    border-top: 4px solid #DC1975;
+    background-color: #1D144C;
+}
+
+.header-chart-container {
+    padding-top:100px;
+    max-height:100vh;
 }

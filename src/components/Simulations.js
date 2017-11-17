@@ -94,10 +94,10 @@ export default class Simulations extends React.Component {
           label: 'Histogram',
           data: this.state.histogram,
           fill: false,
-          backgroundColor: '#71B37C',
-          borderColor: '#71B37C',
-          hoverBackgroundColor: '#71B37C',
-          hoverBorderColor: '#71B37C'
+          backgroundColor: '#DC1975',
+          borderColor: '#DC1975',
+          hoverBackgroundColor: '#DC1975',
+          hoverBorderColor: '#DC1975'
         }
       ]
     };
@@ -193,14 +193,12 @@ export default class Simulations extends React.Component {
     };
     return (
       <div>
-        <div className="row">
-          <div className="col-md-4 offset-md-1">
+          <div>
             <h3>Multi-Year Simulation</h3>
           </div>
-          <div className="col-md-6">
-            <Bar data={data} options={options}/>
+          <div>
+            <Bar data={data}/>
           </div>
-        </div>
 
 
         <div className="row">

@@ -69,6 +69,9 @@ export default class Simulation extends React.Component {
     var data = this.getChartData();
     return (
       <div>
+        <div>
+          <h3>One Year Simulation</h3>
+        </div>
         <Line data={data} />
       </div>
     );
