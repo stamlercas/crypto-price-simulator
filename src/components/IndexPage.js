@@ -8,8 +8,8 @@ export default class IndexPage extends React.Component {
 		this.state = {
 			exchanges: [],
 			markets: [],
-			exchange: '',
-			market: '',
+			exchange: {},
+			market: {},
 			candlestickChart: [],
 			futureData: [],
 			summaryStatistics: {
@@ -52,8 +52,8 @@ export default class IndexPage extends React.Component {
 		      }
 	    };
 
+		this.handleMarketChange = this.handleMarketChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleFormChange = this.handleFormChange.bind(this);
 		this.getMarkets = this.getMarkets.bind(this);
 	}
 
@@ -79,22 +79,22 @@ export default class IndexPage extends React.Component {
 			self.setState({markets: res});
 			self.setState({market: res[0]});
 		});
-		this.handleFormChange(e);
+		this.setState({exchange: exchange});
 	}
 
-	handleFormChange(e) {
-			this.setState({[e.target.name]: e.target.value});
-			console.log(e.target.value);
+	handleMarketChange(e) {
+			this.setState({[e.target.name]: this.state.exchange.markets_by_id[e.target.value]});
 	}
 
 	handleSubmit(e) {
 		e.preventDefault();
-		var exchange = new this.ccxt[this.state.exchange]();
-		if (exchange.hasFetchOHLCV) {
+		//var exchange = new this.ccxt[this.state.exchange]();
+		if (this.state.exchange.hasFetchOHLCV) {
 			(async () => {
-	            return await exchange.fetchOHLCV (this.state.market, '1d');
+				console.log(this.state.market);
+	            return await this.state.exchange.fetchOHLCV (this.state.market.symbol, '1d');
 		    })().then(res => {
-		    	if (this.state.exchange === 'poloniex') {	// poloniex's OHLCV data goes oldest to latest, so needs to be reversed
+		    	if (this.state.exchange.id === 'poloniex') {	// poloniex's OHLCV data goes oldest to latest, so needs to be reversed
 		    		res = res.reverse();
 		    		res.splice(res.length - 1, 1);			// has funky data that is not correct...
 		    	}
@@ -139,15 +139,15 @@ export default class IndexPage extends React.Component {
 	        {
 	          //label: "Future Data",
 	          lineTension: 0.1,
-	          borderCapStyle: 'butt',
+	          //borderCapStyle: 'butt',
 	          borderDash: [],
 	          borderDashOffset: 0.0,
-	          borderJoinStyle: 'miter',
+	          //borderJoinStyle: 'miter',
 	          pointBorderWidth: 1,
 	          pointHoverRadius: 1,
-	          pointHoverBorderWidth: 2,
+	          pointHoverBorderWidth: 1,
 	          pointRadius: 1,
-	          pointHitRadius: 2,
+	          pointHitRadius: 1,
 	          backgroundColor: gradient,
 	          borderColor: '#0CCE6B',
 	          pointBorderColor: '#0CCE6B',
@@ -177,10 +177,10 @@ export default class IndexPage extends React.Component {
 					      	})}
 				  		  </select>
 
-				  		  <select name="market" className="form-control" onChange={this.handleFormChange} required>
-				  		  	<option value="" disabled selected>{ (this.state.exchange === '') ? 'Markets' : '...' }</option>
+				  		  <select name="market" className="form-control" onChange={this.handleMarketChange} required>
+				  		  	<option value="" disabled selected>{ (this.state.exchange === {}) ? 'Markets' : '...' }</option>
 				      		{this.state.markets.map(item => {
-					      		return <option value={item.symbol}>{item.symbol}</option>;
+					      		return <option value={item.id}>{item.symbol}</option>;
 					      	})}
 				  		  </select>
 				  		  <span className="input-group-btn">
@@ -189,7 +189,7 @@ export default class IndexPage extends React.Component {
 				  	</div>
 				</form>
 	      	</div>
-			<Analysis historicalData={this.state.candlestickChart} timestamp={this.state.timestamp}/>
+			<Analysis historicalData={this.state.candlestickChart} timestamp={this.state.timestamp} market={this.state.market} />
       	</div>
     );
   }

@@ -75700,8 +75700,8 @@ var IndexPage = function (_React$Component) {
 		_this.state = {
 			exchanges: [],
 			markets: [],
-			exchange: '',
-			market: '',
+			exchange: {},
+			market: {},
 			candlestickChart: [],
 			futureData: [],
 			summaryStatistics: {
@@ -75740,8 +75740,8 @@ var IndexPage = function (_React$Component) {
 			}
 		};
 
+		_this.handleMarketChange = _this.handleMarketChange.bind(_this);
 		_this.handleSubmit = _this.handleSubmit.bind(_this);
-		_this.handleFormChange = _this.handleFormChange.bind(_this);
 		_this.getMarkets = _this.getMarkets.bind(_this);
 		return _this;
 	}
@@ -75771,13 +75771,12 @@ var IndexPage = function (_React$Component) {
 				self.setState({ markets: res });
 				self.setState({ market: res[0] });
 			});
-			this.handleFormChange(e);
+			this.setState({ exchange: exchange });
 		}
 	}, {
-		key: 'handleFormChange',
-		value: function handleFormChange(e) {
-			this.setState(_defineProperty({}, e.target.name, e.target.value));
-			console.log(e.target.value);
+		key: 'handleMarketChange',
+		value: function handleMarketChange(e) {
+			this.setState(_defineProperty({}, e.target.name, this.state.exchange.markets_by_id[e.target.value]));
 		}
 	}, {
 		key: 'handleSubmit',
@@ -75785,12 +75784,13 @@ var IndexPage = function (_React$Component) {
 			var _this2 = this;
 
 			e.preventDefault();
-			var exchange = new this.ccxt[this.state.exchange]();
-			if (exchange.hasFetchOHLCV) {
+			//var exchange = new this.ccxt[this.state.exchange]();
+			if (this.state.exchange.hasFetchOHLCV) {
 				(async function () {
-					return await exchange.fetchOHLCV(_this2.state.market, '1d');
+					console.log(_this2.state.market);
+					return await _this2.state.exchange.fetchOHLCV(_this2.state.market.symbol, '1d');
 				})().then(function (res) {
-					if (_this2.state.exchange === 'poloniex') {
+					if (_this2.state.exchange.id === 'poloniex') {
 						// poloniex's OHLCV data goes oldest to latest, so needs to be reversed
 						res = res.reverse();
 						res.splice(res.length - 1, 1); // has funky data that is not correct...
@@ -75840,15 +75840,15 @@ var IndexPage = function (_React$Component) {
 					datasets: [{
 						//label: "Future Data",
 						lineTension: 0.1,
-						borderCapStyle: 'butt',
+						//borderCapStyle: 'butt',
 						borderDash: [],
 						borderDashOffset: 0.0,
-						borderJoinStyle: 'miter',
+						//borderJoinStyle: 'miter',
 						pointBorderWidth: 1,
 						pointHoverRadius: 1,
-						pointHoverBorderWidth: 2,
+						pointHoverBorderWidth: 1,
 						pointRadius: 1,
-						pointHitRadius: 2,
+						pointHitRadius: 1,
 						backgroundColor: gradient,
 						borderColor: '#0CCE6B',
 						pointBorderColor: '#0CCE6B',
@@ -75901,16 +75901,16 @@ var IndexPage = function (_React$Component) {
 							),
 							_react2.default.createElement(
 								'select',
-								{ name: 'market', className: 'form-control', onChange: this.handleFormChange, required: true },
+								{ name: 'market', className: 'form-control', onChange: this.handleMarketChange, required: true },
 								_react2.default.createElement(
 									'option',
 									{ value: '', disabled: true, selected: true },
-									this.state.exchange === '' ? 'Markets' : '...'
+									this.state.exchange === {} ? 'Markets' : '...'
 								),
 								this.state.markets.map(function (item) {
 									return _react2.default.createElement(
 										'option',
-										{ value: item.symbol },
+										{ value: item.id },
 										item.symbol
 									);
 								})
@@ -75927,7 +75927,7 @@ var IndexPage = function (_React$Component) {
 						)
 					)
 				),
-				_react2.default.createElement(_Analysis2.default, { historicalData: this.state.candlestickChart, timestamp: this.state.timestamp })
+				_react2.default.createElement(_Analysis2.default, { historicalData: this.state.candlestickChart, timestamp: this.state.timestamp, market: this.state.market })
 			);
 		}
 	}]);
@@ -76075,6 +76075,44 @@ var Analysis = function (_React$Component) {
       return _react2.default.createElement(
         'section',
         { className: 'container graph-container' },
+        _react2.default.createElement(
+          'div',
+          { className: 'row market-info' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-6 col-sm-4 text-center' },
+            _react2.default.createElement(
+              'h3',
+              null,
+              this.props.market.symbol
+            ),
+            'Market'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-6 col-sm-4 text-center' },
+            _react2.default.createElement(
+              'h3',
+              null,
+              this.props.historicalData[0][this.close].toPrecision(8),
+              ' ',
+              this.props.market.quote
+            ),
+            'Current Price'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-6 col-sm-4 text-center' },
+            _react2.default.createElement(
+              'h3',
+              null,
+              this.props.historicalData.length
+            ),
+            'day',
+            this.props.historicalData.length === 1 ? '' : 's',
+            ' of data'
+          )
+        ),
         _react2.default.createElement(_Simulation2.default, { historicalData: this.props.historicalData, summaryStatistics: this.state.summaryStatistics }),
         _react2.default.createElement(_Simulations2.default, { historicalData: this.props.historicalData, summaryStatistics: this.state.summaryStatistics })
       );
@@ -92412,7 +92450,7 @@ var Simulations = function (_React$Component) {
                   null,
                   'Mean'
                 ),
-                this.state.simulationAnalysis.mean.toFixed(5)
+                this.state.simulationAnalysis.mean.toPrecision(8)
               ),
               _react2.default.createElement(
                 'div',
@@ -92422,7 +92460,7 @@ var Simulations = function (_React$Component) {
                   null,
                   'Median'
                 ),
-                this.state.simulationAnalysis.median.toFixed(5)
+                this.state.simulationAnalysis.median.toPrecision(8)
               ),
               _react2.default.createElement(
                 'div',
@@ -92432,7 +92470,7 @@ var Simulations = function (_React$Component) {
                   null,
                   'Standard Deviation'
                 ),
-                this.state.simulationAnalysis.stdev.toFixed(5)
+                this.state.simulationAnalysis.stdev.toPrecision(8)
               ),
               _react2.default.createElement(
                 'div',
@@ -92442,7 +92480,7 @@ var Simulations = function (_React$Component) {
                   null,
                   'Min'
                 ),
-                this.state.simulationAnalysis.min.toFixed(5)
+                this.state.simulationAnalysis.min.toPrecision(8)
               ),
               _react2.default.createElement(
                 'div',
@@ -92452,7 +92490,7 @@ var Simulations = function (_React$Component) {
                   null,
                   'Max'
                 ),
-                this.state.simulationAnalysis.max.toFixed(5)
+                this.state.simulationAnalysis.max.toPrecision(8)
               ),
               _react2.default.createElement(
                 'div',
@@ -92462,7 +92500,7 @@ var Simulations = function (_React$Component) {
                   null,
                   'Range'
                 ),
-                this.state.simulationAnalysis.range.toFixed(5)
+                this.state.simulationAnalysis.range.toPrecision(8)
               )
             ),
             _react2.default.createElement('br', null),
@@ -92488,7 +92526,7 @@ var Simulations = function (_React$Component) {
                       null,
                       '3sd'
                     ),
-                    this.state.simulationAnalysis.percentiles.sd3.low.toFixed(5)
+                    this.state.simulationAnalysis.percentiles.sd3.low.toPrecision(8)
                   ),
                   _react2.default.createElement(
                     'div',
@@ -92498,7 +92536,7 @@ var Simulations = function (_React$Component) {
                       null,
                       '2sd'
                     ),
-                    this.state.simulationAnalysis.percentiles.sd2.low.toFixed(5)
+                    this.state.simulationAnalysis.percentiles.sd2.low.toPrecision(8)
                   ),
                   _react2.default.createElement(
                     'div',
@@ -92508,7 +92546,7 @@ var Simulations = function (_React$Component) {
                       null,
                       '1sd'
                     ),
-                    this.state.simulationAnalysis.percentiles.sd1.low.toFixed(5)
+                    this.state.simulationAnalysis.percentiles.sd1.low.toPrecision(8)
                   )
                 )
               ),
@@ -92520,7 +92558,7 @@ var Simulations = function (_React$Component) {
                   null,
                   'Current'
                 ),
-                this.state.simulationAnalysis.percentiles.cur.toFixed(5)
+                this.state.simulationAnalysis.percentiles.cur.toPrecision(8)
               ),
               _react2.default.createElement(
                 'div',
@@ -92536,7 +92574,7 @@ var Simulations = function (_React$Component) {
                       null,
                       '1sd'
                     ),
-                    this.state.simulationAnalysis.percentiles.sd1.high.toFixed(5)
+                    this.state.simulationAnalysis.percentiles.sd1.high.toPrecision(8)
                   ),
                   _react2.default.createElement(
                     'div',
@@ -92546,7 +92584,7 @@ var Simulations = function (_React$Component) {
                       null,
                       '2sd'
                     ),
-                    this.state.simulationAnalysis.percentiles.sd2.high.toFixed(5)
+                    this.state.simulationAnalysis.percentiles.sd2.high.toPrecision(8)
                   ),
                   _react2.default.createElement(
                     'div',
@@ -92556,7 +92594,7 @@ var Simulations = function (_React$Component) {
                       null,
                       '3sd'
                     ),
-                    this.state.simulationAnalysis.percentiles.sd3.high.toFixed(5)
+                    this.state.simulationAnalysis.percentiles.sd3.high.toPrecision(8)
                   )
                 )
               )

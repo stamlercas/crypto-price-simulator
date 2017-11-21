@@ -90,6 +90,20 @@ export default class Analysis extends React.Component {
     console.log(this.props.historicalData);
     return (
       <section className="container graph-container">
+        <div className="row market-info">
+          <div className="col-6 col-sm-4 text-center">
+            <h3>{this.props.market.symbol}</h3>
+            Market
+          </div>
+          <div className="col-6 col-sm-4 text-center">
+            <h3>{this.props.historicalData[0][this.close].toPrecision(8)} {this.props.market.quote}</h3>
+            Current Price
+          </div>
+          <div className="col-6 col-sm-4 text-center">
+            <h3>{this.props.historicalData.length}</h3>
+            day{(this.props.historicalData.length === 1) ? '' : 's'} of data
+          </div>
+        </div>
         <Simulation historicalData={this.props.historicalData} summaryStatistics={this.state.summaryStatistics}/>
         <Simulations historicalData={this.props.historicalData} summaryStatistics={this.state.summaryStatistics} />
       </section>

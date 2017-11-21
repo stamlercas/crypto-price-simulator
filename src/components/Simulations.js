@@ -207,27 +207,27 @@ export default class Simulations extends React.Component {
             <div className="row text-center">
               <div className="col-md-2">
                 <h4>Mean</h4>
-                {this.state.simulationAnalysis.mean.toFixed(5)}
+                {this.state.simulationAnalysis.mean.toPrecision(8)}
               </div>
               <div className="col-md-2">
                 <h4>Median</h4>
-                {this.state.simulationAnalysis.median.toFixed(5)}
+                {this.state.simulationAnalysis.median.toPrecision(8)}
               </div>
               <div className="col-md-2">
                 <h4>Standard Deviation</h4>
-                {this.state.simulationAnalysis.stdev.toFixed(5)}
+                {this.state.simulationAnalysis.stdev.toPrecision(8)}
               </div>
               <div className="col-md-2">
                 <h4>Min</h4>
-                {this.state.simulationAnalysis.min.toFixed(5)}
+                {this.state.simulationAnalysis.min.toPrecision(8)}
               </div>
               <div className="col-md-2">
                 <h4>Max</h4>
-                {this.state.simulationAnalysis.max.toFixed(5)}
+                {this.state.simulationAnalysis.max.toPrecision(8)}
               </div>
               <div className="col-md-2">
                 <h4>Range</h4>
-                {this.state.simulationAnalysis.range.toFixed(5)}
+                {this.state.simulationAnalysis.range.toPrecision(8)}
               </div>
             </div>
             <br />
@@ -237,35 +237,35 @@ export default class Simulations extends React.Component {
                   <div className="row">
                     <div className="col-md-4 text-center text-danger">
                       <h4>3sd</h4>
-                      {this.state.simulationAnalysis.percentiles.sd3.low.toFixed(5)}
+                      {this.state.simulationAnalysis.percentiles.sd3.low.toPrecision(8)}
                     </div>
                     <div className="col-md-4 text-center text-warning">
                         <h4>2sd</h4>
-                        {this.state.simulationAnalysis.percentiles.sd2.low.toFixed(5)}
+                        {this.state.simulationAnalysis.percentiles.sd2.low.toPrecision(8)}
                     </div>
                     <div className="col-md-4 text-center text-success">
                         <h4>1sd</h4>
-                        {this.state.simulationAnalysis.percentiles.sd1.low.toFixed(5)}
+                        {this.state.simulationAnalysis.percentiles.sd1.low.toPrecision(8)}
                     </div>
                   </div>
               </div>
               <div className="col-md-2 text-center">
                   <h4>Current</h4>
-                  {this.state.simulationAnalysis.percentiles.cur.toFixed(5)}
+                  {this.state.simulationAnalysis.percentiles.cur.toPrecision(8)}
               </div>
               <div className="col-md-5">
                   <div className="row">
                     <div className=" col-md-4 text-center text-success">
                         <h4>1sd</h4>
-                        {this.state.simulationAnalysis.percentiles.sd1.high.toFixed(5)}
+                        {this.state.simulationAnalysis.percentiles.sd1.high.toPrecision(8)}
                     </div>
                     <div className="col-md-4 text-center text-warning">
                         <h4>2sd</h4>
-                        {this.state.simulationAnalysis.percentiles.sd2.high.toFixed(5)}
+                        {this.state.simulationAnalysis.percentiles.sd2.high.toPrecision(8)}
                     </div>
                     <div className="col-md-4 text-center text-danger">
                         <h4>3sd</h4>
-                        {this.state.simulationAnalysis.percentiles.sd3.high.toFixed(5)}
+                        {this.state.simulationAnalysis.percentiles.sd3.high.toPrecision(8)}
                     </div>
                   </div>
               </div>
