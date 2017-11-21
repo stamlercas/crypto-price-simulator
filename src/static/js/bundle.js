@@ -75790,6 +75790,11 @@ var IndexPage = function (_React$Component) {
 				(async function () {
 					return await exchange.fetchOHLCV(_this2.state.market, '1d');
 				})().then(function (res) {
+					if (_this2.state.exchange === 'poloniex') {
+						// poloniex's OHLCV data goes oldest to latest, so needs to be reversed
+						res = res.reverse();
+						res.splice(res.length - 1, 1); // has funky data that is not correct...
+					}
 					_this2.setState({ candlestickChart: res });
 					_this2.setState({ timestamp: Date.now() });
 				});

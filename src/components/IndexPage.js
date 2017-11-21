@@ -94,6 +94,10 @@ export default class IndexPage extends React.Component {
 			(async () => {
 	            return await exchange.fetchOHLCV (this.state.market, '1d');
 		    })().then(res => {
+		    	if (this.state.exchange === 'poloniex') {	// poloniex's OHLCV data goes oldest to latest, so needs to be reversed
+		    		res = res.reverse();
+		    		res.splice(res.length - 1, 1);			// has funky data that is not correct...
+		    	}
 		    	this.setState({candlestickChart: res});
 		    	this.setState({timestamp: Date.now()});
 		    });
